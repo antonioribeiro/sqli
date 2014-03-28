@@ -1,8 +1,16 @@
 <?php namespace PragmaRX\Select\Vendor\Laravel\Artisan;
 
 use Illuminate\Console\Command;
+use Symfony\Component\Console\Input\InputArgument;
 
 class Base extends Command {
+
+	/**
+	 * The table helper set.
+	 *
+	 * @var \Symfony\Component\Console\Helper\TableHelper
+	 */
+	protected $table;
 
 	public function displayMessages($type, $messages)
 	{
@@ -19,7 +27,9 @@ class Base extends Command {
 	 */
 	protected function getArguments()
 	{
-		return isset($this->arguments) ? $this->arguments : array();
+		return array(
+			array('query', InputArgument::IS_ARRAY, 'The SQL query to be executed'),
+		);
 	}
 
 	/**
@@ -31,4 +41,42 @@ class Base extends Command {
 	{
 		return isset($this->options) ? $this->options : array();
 	}
+
+	public function display($result)
+	{
+		if ($result)
+		{
+			if (is_array($result))
+			{
+				$this->displayTable($result);
+			}
+			else
+			{
+				$this->info($result);
+			}
+		}
+	}
+
+	public function displayTable($table)
+	{
+		$headers = $this->makeHeaders($table[0]);
+
+		$rows = array();
+
+		foreach ($table as $row)
+		{
+			$rows[] = (array) $row;
+		}
+
+		$this->table = $this->getHelperSet()->get('table');
+
+		$this->table->setHeaders($headers)->setRows($rows);
+
+		$this->table->render($this->getOutput());
+	}
+
+	private function makeHeaders($items)
+	{
+		return array_keys((array) $items);
+	}	
 }

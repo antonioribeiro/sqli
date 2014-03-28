@@ -21,88 +21,37 @@
 
 namespace PragmaRX\Select;
 
-use Symfony\Component\Finder\Finder;
-use DB;
+use PragmaRX\Select\Support\Database;
+use PragmaRX\Select\Support\Statement;
 
 class Select
 {
-	public function execute($base, $dml)
-	{
-		$dml = $this->makeCommand($base, $dml);
+	private $database;
 
-		return $this->executeCommand($dml);
+	public function __construct(Database $database, Statement $statement)
+	{
+		$this->statement = $statement;
+		
+		$this->database = $database;
 	}
 
-	/**
-	 * @param $dml
-	 * @return mixed
-	 */
-	private function buildCommandString($dml)
+	public function execute($verb, $arguments)
 	{
-		if (is_string($dml))
-		{
-			return $dml;
-		}
+		$this->statement->setVerb($verb);
 
-		// Unix-like systems may convert 'select * from whatever' to
-		// 'select file1 file2 file3 file4 from whatever'
-		// so we will try to transform this back to star (*).
-		$files = array();
+		$this->statement->setArguments($arguments);
 
-		foreach ((new Finder())->in(getcwd())->depth(0) as $file)
-		{
-			$files[] = $file->getFilename();
-		}
-
-		$i = 0;
-
-		asort($files);
-
-		while ($i < count($dml))
-		{
-			if ($dml[$i] == $files[0]) {
-				$slice = array_slice($dml, $i, count($files));
-
-				asort($slice);
-
-				if (implode(',', $slice) == implode(',', $files)) {
-					array_splice($dml, $i, count($files), '*');
-
-					$i = 0;
-
-					continue;
-				}
-			}
-
-			$i++;
-		}
-
-		return trim(implode(' ', $dml));
+		return $this->executeStatement($this->statement->getStatement());
 	}
 
-	public function addBaseToCommand($base, $command)
+	public function executeStatement($command)
 	{
-		$first = strtolower(explode(' ', $command)[0]);
-
-		if ($first !== strtolower($base))
-		{
-			$command = "$base $command";
-		}
-
-		return $command;
+		return $this->database->execute($command);
 	}
 
-	public function makeCommand($base, $command)
+	public function getTables($count)
 	{
-		return $this->addBaseToCommand(
-			$base,
-			$this->buildCommandString($command)
-		);
-	}
-
-	public function executeCommand($command)
-	{
-		return DB::select(DB::raw($command));
+		return $this->database->getAllTables($count);
 	}
 
 }

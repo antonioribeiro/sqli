@@ -1,20 +1,20 @@
 <?php namespace PragmaRX\Select\Vendor\Laravel\Artisan;
 
-class Select extends Base {
+class Insert extends Base {
 
 	/**
 	 * Command name.
 	 *
 	 * @var string
 	 */
-	protected $name = 'select';
+	protected $name = 'insert';
 
 	/**
 	 * Command description.
 	 *
 	 * @var string
 	 */
-	protected $description = 'Query the database using SQL language';
+	protected $description = 'Execute a SQL INSERT statement';
 
 	/**
 	 * Execute the command.

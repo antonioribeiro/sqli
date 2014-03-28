@@ -1,20 +1,20 @@
 <?php namespace PragmaRX\Select\Vendor\Laravel\Artisan;
 
-class Select extends Base {
+class Sql extends Base {
 
 	/**
 	 * Command name.
 	 *
 	 * @var string
 	 */
-	protected $name = 'select';
+	protected $name = 'sql';
 
 	/**
 	 * Command description.
 	 *
 	 * @var string
 	 */
-	protected $description = 'Query the database using SQL language';
+	protected $description = 'Execute a raw SQL statement';
 
 	/**
 	 * Execute the command.

@@ -2,18 +2,23 @@
 
 namespace spec\PragmaRX\Select;
 
+use Mockery;
+
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
+use Illuminate\Database\Connection as DB;
 
 class SelectSpec extends ObjectBehavior
 {
-    function it_is_initializable()
-    {
-        $this->shouldHaveType('PragmaRX\Select\Select');
-    }
+	// private $db;
 
-	function it_select_users_table()
-	{
-		$this->execute('select', '* from users');
-	}
+	// function let(DB $db)
+	// {
+	// 	$this->beConstructedWith($db);
+	// }
+
+ //    function it_is_initializable()
+ //    {
+ //        $this->shouldHaveType('PragmaRX\Select\Select');
+ //    }
+
 }
