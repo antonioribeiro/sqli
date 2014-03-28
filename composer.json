@@ -1,0 +1,42 @@
+{
+    "name": "pragmarx/select",
+
+    "description": "Laravel 4 Blade on Select",
+
+    "keywords": ["select", "whitelist", "blacklist", "laravel"],
+
+    "license": "BSD-3-Clause",
+
+    "authors": [
+        {
+            "name": "Antonio Carlos Ribeiro",
+            "email": "acr@antoniocarlosribeiro.com",
+            "role": "Creator"
+        }
+    ],
+
+    "require": {
+        "php": ">=5.3.7",
+        "pragmarx/support": "~0.2"
+    },
+
+    "require-dev": {
+        "satooshi/php-coveralls": "dev-master",
+        "phpspec/phpspec": "2.0.*@dev"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "PragmaRX\\Select\\": "src/"
+        }
+    },
+
+    "extra": {
+            "component": "package",
+            "branch-alias": {
+                    "dev-master": "0.7-dev"
+            }
+    },
+
+    "minimum-stability": "dev"
+}
