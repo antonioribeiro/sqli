@@ -24,7 +24,7 @@ namespace PragmaRX\Select\Vendor\Laravel;
 use PragmaRX\Select\Select;
 use PragmaRX\Select\Support\Database;
 use PragmaRX\Select\Support\Statement;
-use PragmaRX\Select\Support\File;
+use PragmaRX\Select\Support\WorkingDirectory;
  
 use PragmaRX\Support\Config;
 use PragmaRX\Support\Filesystem;
@@ -108,7 +108,7 @@ class ServiceProvider extends PragmaRXServiceProvider {
 
             return new Select(
                 new Database($app['db']),
-                new Statement(new File)
+                new Statement(new WorkingDirectory)
             );
         });
     }

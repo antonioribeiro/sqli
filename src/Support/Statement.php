@@ -21,7 +21,7 @@
 
 namespace PragmaRX\Select\Support;
 
-use PragmaRX\Select\Support\File;
+use PragmaRX\Select\Support\WorkingDirectory;
 
 class Statement {
 
@@ -38,13 +38,20 @@ class Statement {
 	private $arguments;
 
 	/**
+	 * The working directory, we might get the files from it.
+	 *
+	 * @var
+	 */
+	private $workingDirectory;
+
+	/**
 	 * Create instance.
 	 *
-	 * @param File $files
+	 * @param WorkingDirectory workingDirectory
 	 */
-	public function __construct(File $files)
+	public function __construct(WorkingDirectory $workingDirectory)
 	{
-		$this->files = $files;
+		$this->workingDirectory = $workingDirectory;
 	}
 
 	/**
@@ -114,7 +121,7 @@ class Statement {
 			return $arguments;
 		}
 
-		$files = $this->files->getAllFromWorkingDirectory();
+		$files = $this->workingDirectory->getFiles();
 
 		$i = 0;
 

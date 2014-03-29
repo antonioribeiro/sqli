@@ -23,7 +23,7 @@ namespace PragmaRX\Select\Support;
 
 use Symfony\Component\Finder\Finder;
 
-class File {
+class WorkingDirectory {
 
 	/**
 	 * Class instantiator.
@@ -39,7 +39,7 @@ class File {
 	 *
 	 * @return array
 	 */
-	public function getAllFromWorkingDirectory()
+	public function getFiles()
 	{
 		$files = array();
 

@@ -4,13 +4,13 @@ namespace spec\PragmaRX\Select\Support;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use PragmaRX\Select\Support\File;
+use PragmaRX\Select\Support\WorkingDirectory;
 
 class StatementSpec extends ObjectBehavior
 {
-	function let(File $file)
+	function let(WorkingDirectory $workingDirectory)
 	{
-		$this->beConstructedWith($file);
+		$this->beConstructedWith($workingDirectory);
 	}
 
     function it_is_initializable()
@@ -26,7 +26,7 @@ class StatementSpec extends ObjectBehavior
 		$this->getStatement()->shouldReturn('select * from users');
 	}
 
-	function it_ignores_verbs_sent_twice(File $file)
+	function it_ignores_verbs_sent_twice(WorkingDirectory $file)
 	{
 		$this->setVerb('select');
 		$this->setArguments('select * from users');
@@ -34,7 +34,7 @@ class StatementSpec extends ObjectBehavior
 		$this->getStatement()->shouldReturn('select * from users');
 	}
 
-	function it_understand_quoted_statements(File $file)
+	function it_understand_quoted_statements(WorkingDirectory $file)
 	{
 		$this->setVerb('select');
 		$this->setArguments("* from users where first_name != 'Antonio Carlos'");
@@ -42,7 +42,7 @@ class StatementSpec extends ObjectBehavior
 		$this->getStatement()->shouldReturn("select * from users where first_name != 'Antonio Carlos'");
 	}
 
-	function it_ignores_sql_verb(File $file)
+	function it_ignores_sql_verb(WorkingDirectory $file)
 	{
 		$this->setVerb('sql');
 		$this->setArguments('select * from users');
@@ -50,7 +50,7 @@ class StatementSpec extends ObjectBehavior
 		$this->getStatement()->shouldReturn('select * from users');
 	}
 
-	function it_understands_globbed_star_arguments(File $file)
+	function it_understands_globbed_star_arguments(WorkingDirectory $workingDirectory)
 	{
 		$files1 = array('file3', 'file1', 'file2', 'file4');
 		$files2 = array('file1', 'file3', 'file4', 'file2');
@@ -58,12 +58,12 @@ class StatementSpec extends ObjectBehavior
 		$this->setVerb('select');
 		$this->setArguments(array_merge($files1, array('from', 'users')));
 
-		$file->getAllFromWorkingDirectory()->willReturn($files2);
+		$workingDirectory->getFiles()->willReturn($files2);
 
 		$this->getStatement()->shouldReturn('select * from users');
 	}
 
-	function it_fails_on_directory_error(File $file)
+	function it_fails_on_directory_error(WorkingDirectory $workingDirectory)
 	{
 		$files1 = array('file1', 'file2', 'file4', 'file2');
 		$files2 = array('file3', 'file1', 'file2', 'file4');
@@ -71,7 +71,7 @@ class StatementSpec extends ObjectBehavior
 		$this->setVerb('select');
 		$this->setArguments(array_merge($files1, array('from', 'users')));
 
-		$file->getAllFromWorkingDirectory()->willReturn($files2);
+		$workingDirectory->getFiles()->willReturn($files2);
 
 		$this->getStatement()->shouldReturn('select file1 file2 file4 file2 from users');
 	}
