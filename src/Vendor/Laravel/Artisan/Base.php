@@ -51,6 +51,11 @@ class Base extends Command {
 				$this->displayTable($result);
 			}
 			else
+			if (is_bool($result))
+			{
+				$this->info($result ? 'Statement executed sucessfully.' : 'And error ocurred while executing the statement.');
+			}
+			else
 			{
 				$this->info($result);
 			}

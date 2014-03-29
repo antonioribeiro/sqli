@@ -21,46 +21,88 @@
 
 namespace PragmaRX\Select\Support;
 
+use PragmaRX\Select\Support\File;
+
 class Statement {
 
+	/**
+	 * The verb.
+	 * @var
+	 */
 	private $verb;
 
+	/**
+	 * The arguments.
+	 * @var
+	 */
 	private $arguments;
 
-	public function __construct($files)
+	/**
+	 * Create instance.
+	 *
+	 * @param File $files
+	 */
+	public function __construct(File $files)
 	{
 		$this->files = $files;
 	}
 
+	/**
+	 * Retrieve a full statement.
+	 *
+	 * @return string
+	 */
 	public function getStatement()
 	{
 		return $this->makeStatement($this->getVerb(), $this->getArguments());
 	}
 
+	/**
+	 * Verb setter.
+	 *
+	 * @param $verb
+	 */
 	public function setVerb($verb)
 	{
 		$this->verb = $verb;
 	}
 
+	/**
+	 * Arguments setter.
+	 *
+	 * @param $arguments
+	 */
 	public function setArguments($arguments)
 	{
 		$this->arguments = $arguments;
 	}
 
+	/**
+	 * Verb getter.
+	 *
+	 * @return mixed
+	 */
 	public function getVerb()
 	{
 		return $this->verb;
 	}
 
+	/**
+	 * Arguments getter.
+	 *
+	 * @return mixed
+	 */
 	public function getArguments()
 	{
 		return $this->arguments;
 	}
 
 	/**
-	 * 	Unix-like systems may convert 'select * from whatever' to
-	 *	'select file1 file2 file3 file4 from whatever'
-	 *	so we will try to transform this back to star (*).
+	 * Routine for assembling the list of arguments to a string.
+	 *
+	 * 	Unix-like systems may convert (glob expansion) 'select * from whatever' to
+	 *	'select file1 file2 file3 file4 from whatever' so we will try to transform
+	 *  it back to star (*).
 	 *
 	 * @param $arguments
 	 * @return mixed
@@ -98,6 +140,13 @@ class Statement {
 		return trim(implode(' ', $arguments));
 	}
 
+	/**
+	 * Add the verb to the statement.
+	 *
+	 * @param $verb
+	 * @param $command
+	 * @return string
+	 */
 	public function addVerbToStatement($verb, $command)
 	{
 		$verb = ($verb == 'sql' ? '' : $verb);
@@ -112,6 +161,13 @@ class Statement {
 		return trim($command);
 	}
 
+	/**
+	 * Make a statement.
+	 *
+	 * @param $verb
+	 * @param $command
+	 * @return string
+	 */
 	public function makeStatement($verb, $command)
 	{
 		return $this->addVerbToStatement(

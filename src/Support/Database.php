@@ -25,20 +25,44 @@ use Illuminate\Database\DatabaseManager;
 
 class Database {
 
+	/**
+	 * Database connection or manager.
+	 *
+	 * @var \Illuminate\Database\DatabaseManager
+	 */
 	private $db;
 
+	/**
+	 * Class instantiator.
+	 *
+	 * @param DatabaseManager $db
+	 */
 	public function __construct(DatabaseManager $db)
 	{
 		$this->db = $db;
 	}
 
+	/**
+	 * Execute a statement using the connection.
+	 *
+	 * @param $statement
+	 * @return mixed
+	 */
 	public function execute($statement)
 	{
-		return $this->db->select(
+		$method = $this->isSelect($statement) ? 'select' : 'statement';
+
+		return $this->db->{$method}(
 			$this->db->raw($statement)
 		);
 	}
 
+	/**
+	 * Get a list of tables from the connection.
+	 *
+	 * @param $count
+	 * @return mixed
+	 */
 	public function getAllTables($count)
 	{
 		$tables = $this->execute($this->getSelectTablesStatement());
@@ -51,20 +75,28 @@ class Database {
 		return $this->sortTableList($tables);
 	}
 
+	/**
+	 * Get the statement for selecting the list of table.
+	 *
+	 * @return string
+	 * @throws Exception
+	 */
 	public function getSelectTablesStatement()
 	{
-		switch ($this->db->connection()->getConfig('driver')) {
+		switch ($this->db->connection()->getConfig('driver'))
+		{
 			case 'pgsql':
 				return "SELECT table_schema, table_name FROM information_schema.tables WHERE table_type = 'BASE TABLE' AND table_schema NOT IN ('pg_catalog', 'information_schema');";
 				break;
-			
-			case 'mysql':
-				return "SHOW TABLES;";
-				break;
 
-			case 'sqlsrv':
-				return "SHOW TABLES;";
-				break;
+// TODO
+//			case 'mysql':
+//				return "SHOW TABLES;";
+//				break;
+//
+//			case 'sqlsrv':
+//				return "SHOW TABLES;";
+//				break;
 
 			default: 
 				$error = 'Database driver not supported: '.DB::connection()->getConfig('driver');
@@ -73,6 +105,11 @@ class Database {
 		}
 	}
 
+	/**
+	 * Add the row count to the list of tables.
+	 *
+	 * @param $tables
+	 */
 	private function addRowCount(&$tables)
 	{
 		foreach($tables as $key => $row)
@@ -83,6 +120,12 @@ class Database {
 		}
 	}
 
+	/**
+	 * Sort the list of tables.
+	 *
+	 * @param $tables
+	 * @return mixed
+	 */
 	private function sortTableList($tables)
 	{
 		uasort($tables, array($this, 'sortTableListCompare'));
@@ -90,7 +133,14 @@ class Database {
 		return $tables;
 	}
 
-	private function sortTableListCompare($a, $b) 
+	/**
+	 * Comparison helper for sortTableList.
+	 *
+	 * @param $a
+	 * @param $b
+	 * @return int
+	 */
+	private function sortTableListCompare($a, $b)
 	{
 		if ($a->table_name == $b->table_name) 
 		{
@@ -98,5 +148,16 @@ class Database {
 		}
 
 		return ($a->table_name < $b->table_name) ? -1 : 1;
+	}
+
+	/**
+	 * Verify it's a select statement.
+	 *
+	 * @param $statement
+	 * @return bool
+	 */
+	public function isSelect($statement)
+	{
+		return strtolower(explode(' ', $statement)[0]) === 'select';
 	}
 }

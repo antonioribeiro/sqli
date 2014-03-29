@@ -34,6 +34,14 @@ class StatementSpec extends ObjectBehavior
 		$this->getStatement()->shouldReturn('select * from users');
 	}
 
+	function it_understand_quoted_statements(File $file)
+	{
+		$this->setVerb('select');
+		$this->setArguments("* from users where first_name != 'Antonio Carlos'");
+
+		$this->getStatement()->shouldReturn("select * from users where first_name != 'Antonio Carlos'");
+	}
+
 	function it_ignores_sql_verb(File $file)
 	{
 		$this->setVerb('sql');

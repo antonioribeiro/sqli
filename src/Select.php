@@ -26,8 +26,19 @@ use PragmaRX\Select\Support\Statement;
 
 class Select
 {
+	/**
+	 * Database object.
+	 *
+	 * @var Support\Database
+	 */
 	private $database;
 
+	/**
+	 * Class instantiator.
+	 *
+	 * @param Database $database
+	 * @param Statement $statement
+	 */
 	public function __construct(Database $database, Statement $statement)
 	{
 		$this->statement = $statement;
@@ -35,6 +46,13 @@ class Select
 		$this->database = $database;
 	}
 
+	/**
+	 * Public method for executing statements.
+	 *
+	 * @param $verb
+	 * @param $arguments
+	 * @return mixed
+	 */
 	public function execute($verb, $arguments)
 	{
 		$this->statement->setVerb($verb);
@@ -44,11 +62,23 @@ class Select
 		return $this->executeStatement($this->statement->getStatement());
 	}
 
+	/**
+	 * Execute a statement in database.
+	 *
+	 * @param $command
+	 * @return mixed
+	 */
 	public function executeStatement($command)
 	{
 		return $this->database->execute($command);
 	}
 
+	/**
+	 * Get a list of database tables.
+	 *
+	 * @param $count
+	 * @return mixed
+	 */
 	public function getTables($count)
 	{
 		return $this->database->getAllTables($count);
