@@ -34,6 +34,7 @@ use Symfony\Component\Finder\Finder;
 use PragmaRX\Select\Vendor\Laravel\Artisan\Select as SelectCommand;
 use PragmaRX\Select\Vendor\Laravel\Artisan\Delete as DeleteCommand;
 use PragmaRX\Select\Vendor\Laravel\Artisan\Insert as InsertCommand;
+use PragmaRX\Select\Vendor\Laravel\Artisan\Update as UpdateCommand;
 use PragmaRX\Select\Vendor\Laravel\Artisan\Sql    as SqlCommand;
 use PragmaRX\Select\Vendor\Laravel\Artisan\Tables as TablesCommand;
 
@@ -69,6 +70,7 @@ class ServiceProvider extends PragmaRXServiceProvider {
 	    $this->registerSelectCommand();
         $this->registerDeleteCommand();
         $this->registerInsertCommand();
+	    $this->registerUpdateCommand();
         $this->registerSqlCommand();
         $this->registerTablesCommand();
 
@@ -77,6 +79,7 @@ class ServiceProvider extends PragmaRXServiceProvider {
         $this->commands('select.select.command');
         $this->commands('select.delete.command');
         $this->commands('select.insert.command');
+	    $this->commands('select.update.command');
         $this->commands('select.sql.command');
         $this->commands('select.tables.command');
     }
@@ -147,9 +150,22 @@ class ServiceProvider extends PragmaRXServiceProvider {
         {
             return new InsertCommand();
         });
-    }   
+    }
 
-    /**
+	/**
+	 * Register the Update Artisan command
+	 *
+	 * @return void
+	 */
+	private function registerUpdateCommand()
+	{
+		$this->app['select.update.command'] = $this->app->share(function($app)
+		{
+			return new UpdateCommand();
+		});
+	}
+
+	/**
      * Register the Sql Artisan command
      *
      * @return void
