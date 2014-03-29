@@ -73,13 +73,17 @@ Will give you a list of your tables with an optional row count:
 
 ### Drawbacks
 
-When passing arguments to scripts Linux based systems may remove quotes and misunderstand your parentheses in queries, you if you need to use them you'll have to double quote (any part of) it:
+When passing arguments to scripts Linux based systems may remove quotes and misunderstand your parentheses in queries, you if you need to use them you'll have to double quote it:
 
     a insert "into users (email, first_name, last_name, created_at, updated_at) values ('clint@eastwood.com', 'Clint', 'Eastwood', 'NOW', 'NOW')"
 
-or escape them all
+or just the parts that have them:
 
-    a insert into users \(email, first_name, last_name, created_at, updated_at\) values \(\'paul@newman.com\', \'Paul\', \'Newman\', \'NOW\', \'NOW\'\)
+    a insert into users "(email, first_name, last_name, created_at, updated_at)" values "('clint@eastwood.com', 'Clint', 'Eastwood', 'NOW', 'NOW')"
+
+But you can also escape them with \
+
+    a update users set created_at = \'NOW\'
 
 ### Installation
 
