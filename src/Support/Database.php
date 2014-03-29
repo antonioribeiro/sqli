@@ -22,6 +22,7 @@
 namespace PragmaRX\Select\Support;
 
 use Illuminate\Database\DatabaseManager;
+use Exception;
 
 class Database {
 
@@ -86,20 +87,22 @@ class Database {
 		switch ($this->db->connection()->getConfig('driver'))
 		{
 			case 'pgsql':
-				return "SELECT table_schema, table_name FROM information_schema.tables WHERE table_type = 'BASE TABLE' AND table_schema NOT IN ('pg_catalog', 'information_schema');";
+				return "select table_schema, table_name from information_schema.tables where table_type = 'BASE TABLE' and table_schema not in ('pg_catalog', 'information_schema');";
+
+			case 'mysql':
+				return sprintf(
+							'select table_schema, table_name from information_schema.tables where table_schema=\'%s\';',
+							$this->db->connection()->getDatabaseName()
+						);
 				break;
 
 // TODO
-//			case 'mysql':
-//				return "SHOW TABLES;";
-//				break;
-//
 //			case 'sqlsrv':
 //				return "SHOW TABLES;";
 //				break;
 
 			default: 
-				$error = 'Database driver not supported: '.DB::connection()->getConfig('driver');
+				$error = 'Database driver not supported: '.$this->db->getConfig('driver');
 				throw new Exception($error);
 				break;
 		}
