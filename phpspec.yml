@@ -1,6 +1,6 @@
 suites:
   select_suite:
-    namespace: PragmaRX\Select
+    namespace: PragmaRX\SqlI
     src_path: src
     spec_path: tests
     spec_prefix: spec
