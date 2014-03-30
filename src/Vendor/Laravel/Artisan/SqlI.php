@@ -1,20 +1,20 @@
 <?php namespace PragmaRX\SqlI\Vendor\Laravel\Artisan;
 
-class Delete extends Base {
+class SqlI extends Base {
 
 	/**
 	 * Command name.
 	 *
 	 * @var string
 	 */
-	protected $name = 'delete';
+	protected $name = 'sqli';
 
 	/**
 	 * Command description.
 	 *
 	 * @var string
 	 */
-	protected $description = 'Execute a SQL DELETE statement';
+	protected $description = 'Interact with your database using SQL';
 
 	/**
 	 * Execute the command.
@@ -23,7 +23,7 @@ class Delete extends Base {
 	 */
 	public function fire()
 	{
-		$this->display($this->laravel->select->execute($this->name, $this->input->getArgument('query')));
+		$this->display($this->laravel->select->lSql());
 	}
 
 }

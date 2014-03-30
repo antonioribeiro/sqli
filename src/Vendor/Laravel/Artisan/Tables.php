@@ -1,4 +1,4 @@
-<?php namespace PragmaRX\Select\Vendor\Laravel\Artisan;
+<?php namespace PragmaRX\SqlI\Vendor\Laravel\Artisan;
 
 use Symfony\Component\Console\Input\InputOption;
 

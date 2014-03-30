@@ -1,7 +1,7 @@
 <?php 
 
 /**
- * Part of the Select package.
+ * Part of the SqlI package.
  *
  * NOTICE OF LICENSE
  *
@@ -11,7 +11,7 @@
  * bundled with this package in the LICENSE file.  It is also available at
  * the following URL: http://www.opensource.org/licenses/BSD-3-Clause
  *
- * @package    Select
+ * @package    SqlI
  * @version    0.1.0
  * @author     Antonio Carlos Ribeiro @ PragmaRX
  * @license    BSD License (3-clause)
@@ -19,31 +19,49 @@
  * @link       http://pragmarx.com
  */
 
-namespace PragmaRX\Select;
+namespace PragmaRX\SqlI;
 
-use PragmaRX\Select\Support\Database;
-use PragmaRX\Select\Support\Statement;
+use PragmaRX\SqlI\Support\DatabaseConnection;
+use PragmaRX\SqlI\Support\Statement;
+use PragmaRX\SqlI\Support\SqlInteractive;
 
-class Select
+class SqlI
 {
 	/**
-	 * Database object.
+	 * DatabaseConnection object.
 	 *
-	 * @var Support\Database
+	 * @var Support\DatabaseConnection
 	 */
 	private $database;
 
 	/**
+	 * The statement.
+	 *
+	 * @var Support\Statement
+	 */
+	private $statement;
+
+	/**
+	 * The SQL RePL (read execute print loop) interface.
+	 *
+	 * @var Support\SqlI
+	 */
+	private $sqlI;
+
+	/**
 	 * Class instantiator.
 	 *
-	 * @param Database $database
+	 * @param DatabaseConnection $database
 	 * @param Statement $statement
+	 * @param SqlI $sqlI
 	 */
-	public function __construct(Database $database, Statement $statement)
+	public function __construct(DatabaseConnection $database, Statement $statement, SqlI $sqlI)
 	{
 		$this->statement = $statement;
 		
 		$this->database = $database;
+
+		$this->sqlI = $sqlI;
 	}
 
 	/**
@@ -82,6 +100,14 @@ class Select
 	public function getTables($count)
 	{
 		return $this->database->getAllTables($count);
+	}
+
+	/**
+	 *
+	 */
+	public function lSql()
+	{
+		return $this->sqlI->run();
 	}
 
 }

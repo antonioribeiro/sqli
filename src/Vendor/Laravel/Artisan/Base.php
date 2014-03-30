@@ -1,4 +1,4 @@
-<?php namespace PragmaRX\Select\Vendor\Laravel\Artisan;
+<?php namespace PragmaRX\SqlI\Vendor\Laravel\Artisan;
 
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -12,6 +12,12 @@ class Base extends Command {
 	 */
 	protected $table;
 
+	/**
+	 * Display all messages.
+	 *
+	 * @param $type
+	 * @param $messages
+	 */
 	public function displayMessages($type, $messages)
 	{
 		foreach($messages as $message)
@@ -42,7 +48,13 @@ class Base extends Command {
 		return isset($this->options) ? $this->options : array();
 	}
 
-	public function display($result)
+	/**
+	 * Display results.
+	 *
+	 * @param $result
+	 * @param string $method
+	 */
+	public function display($result, $method = 'info')
 	{
 		if ($result)
 		{
@@ -53,15 +65,20 @@ class Base extends Command {
 			else
 			if (is_bool($result))
 			{
-				$this->info($result ? 'Statement executed sucessfully.' : 'And error ocurred while executing the statement.');
+				$this->{$method}($result ? 'Statement executed sucessfully.' : 'And error ocurred while executing the statement.');
 			}
 			else
 			{
-				$this->info($result);
+				$this->{$method}($result);
 			}
 		}
 	}
 
+	/**
+	 * Display results in table format.
+	 *
+	 * @param $table
+	 */
 	public function displayTable($table)
 	{
 		$headers = $this->makeHeaders($table[0]);
@@ -80,6 +97,12 @@ class Base extends Command {
 		$this->table->render($this->getOutput());
 	}
 
+	/**
+	 * Extract headers from result.
+	 *
+	 * @param $items
+	 * @return array
+	 */
 	private function makeHeaders($items)
 	{
 		return array_keys((array) $items);

@@ -1,4 +1,4 @@
-<?php namespace PragmaRX\Select\Vendor\Laravel\Artisan;
+<?php namespace PragmaRX\SqlI\Vendor\Laravel\Artisan;
 
 class Sql extends Base {
 

@@ -28,7 +28,7 @@
 
     "autoload": {
         "psr-4": {
-            "PragmaRX\\Select\\": "src/"
+            "PragmaRX\\SqlI\\": "src/"
         }
     },
 

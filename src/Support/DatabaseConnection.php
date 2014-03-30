@@ -1,7 +1,7 @@
 <?php 
 
 /**
- * Part of the Select package.
+ * Part of the SqlI package.
  *
  * NOTICE OF LICENSE
  *
@@ -11,7 +11,7 @@
  * bundled with this package in the LICENSE file.  It is also available at
  * the following URL: http://www.opensource.org/licenses/BSD-3-Clause
  *
- * @package    Select
+ * @package    SqlI
  * @version    0.1.0
  * @author     Antonio Carlos Ribeiro @ PragmaRX
  * @license    BSD License (3-clause)
@@ -19,12 +19,12 @@
  * @link       http://pragmarx.com
  */
 
-namespace PragmaRX\Select\Support;
+namespace PragmaRX\SqlI\Support;
 
 use Illuminate\Database\DatabaseManager;
 use Exception;
 
-class Database {
+class DatabaseConnection {
 
 	/**
 	 * Database connection or manager.
@@ -64,7 +64,7 @@ class Database {
 	 * @param $count
 	 * @return mixed
 	 */
-	public function getAllTables($count)
+	public function getAllTables($count = false)
 	{
 		$tables = $this->execute($this->getSelectTablesStatement());
 
