@@ -1,12 +1,51 @@
-# Select v0.5
+# sqli v0.5
 
 [![Latest Stable Version](https://poser.pugx.org/pragmarx/select/v/stable.png)](https://packagist.org/packages/pragmarx/select) [![License](https://poser.pugx.org/pragmarx/select/license.png)](https://packagist.org/packages/pragmarx/select) [![Build Status](https://travis-ci.org/antonioribeiro/select.png)](https://travis-ci.org/antonioribeiro/select)
 
 ## Laravel Artisan Select
 
-A handful of Artisan commands to execute SQL queries.
+A Laravel Artisan SQL Interactive Interface, plus a handful of Artisan commands to execute SQL queries.
 
-### Commands
+### sqli
+
+It's like tinker for SQL, just run
+
+    php artisan sqli
+
+And execute whatever sql query you like in your sql:
+
+    sqli> select email from users;
+
+And you should see it this way:
+
+    +----+------------------------------+
+    | id | email                        |
+    +----+------------------------------+
+    |  1 | arnold@schwarzenegger.com    |
+    |  2 | danny@devito.com             |
+    +----+------------------------------+
+    Executed in 0.0602 seconds.
+
+You can get a list of your tables by running:
+
+    sqli> tables count
+
+The 'count' option it's optional:
+
+    +--------------+-----------------------------+-----------+
+    | table_schema | table_name                  | row_count |
+    +--------------+-----------------------------+-----------+
+    | public       | firewall                    | 2         |
+    | public       | migrations                  | 3         |
+    | public       | sessions                    | 1         |
+    | public       | users                       | 1         |
+    | public       | actors                      | 3431326   |
+    | public       | movies                      | 1764727   |
+    +--------------+-----------------------------+-----------+
+
+To exit, just type `CTRL-C`, `CTRL-D` or `quit`.
+
+### Other Artisan Commands
 
 You'll have access yo the most common DML commands, via Artisan:
 
@@ -21,7 +60,7 @@ A special DML command, to execute whatever else you may needd:
 
 And a command for listing tables:
 
-    table
+    tables
 
 ### Syntax
 
