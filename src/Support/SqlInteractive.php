@@ -53,7 +53,7 @@ class SqlInteractive
 	 *
 	 * @var string
 	 */
-	private $defaultHistoryFileName = '.lsqli_history';
+	private $defaultHistoryFileName = '.sqli_history';
 
 	/**
 	 * Default prompt string.
@@ -518,4 +518,5 @@ class SqlInteractive
 
 		return $result;
 	}
+
 }

@@ -69,13 +69,16 @@ class SqlI
 	 *
 	 * @param $verb
 	 * @param $arguments
+	 * @param mixed $database
 	 * @return mixed
 	 */
-	public function execute($verb, $arguments)
+	public function execute($verb, $arguments, $database = null)
 	{
 		$this->statement->setVerb($verb);
 
 		$this->statement->setArguments($arguments);
+
+		$this->database->setConnection($database);
 
 		return $this->executeStatement($this->statement->getStatement());
 	}
@@ -103,11 +106,20 @@ class SqlI
 	}
 
 	/**
+	 * Run the sql interactive interface.
 	 *
 	 */
-	public function lSql()
+	public function sqlI()
 	{
 		return $this->sqlI->run();
+	}
+
+	/**
+	 * @param $database
+	 */
+	public function setConnection($database)
+	{
+		$this->database->setConnection($database);
 	}
 
 }

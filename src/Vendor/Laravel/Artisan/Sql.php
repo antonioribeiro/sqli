@@ -23,7 +23,9 @@ class Sql extends Base {
 	 */
 	public function fire()
 	{
-		$this->display($this->laravel->select->execute($this->name, $this->input->getArgument('query')));
+		parent::fire();
+
+		$this->display($this->laravel->select->execute($this->name, $this->input->getArgument('query'), $this->input->getOption('database')));
 	}
 
 }

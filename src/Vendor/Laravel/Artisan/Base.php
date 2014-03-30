@@ -2,6 +2,7 @@
 
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 class Base extends Command {
 
@@ -45,7 +46,11 @@ class Base extends Command {
 	 */
 	protected function getOptions()
 	{
-		return isset($this->options) ? $this->options : array();
+		$baseOptions = 	array(
+			array('database', null, InputOption::VALUE_OPTIONAL, 'The database connection to use.'),
+		);
+
+		return array_merge($baseOptions, isset($this->options) ? $this->options : array());
 	}
 
 	/**
@@ -106,5 +111,15 @@ class Base extends Command {
 	private function makeHeaders($items)
 	{
 		return array_keys((array) $items);
-	}	
+	}
+
+	/**
+	 * Base procedures to prepare the command to be run.
+	 *
+	 */
+	public function fire()
+	{
+		$this->laravel->select->setConnection($this->input->getOption('database'));
+	}
+
 }

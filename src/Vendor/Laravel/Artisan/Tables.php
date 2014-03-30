@@ -18,6 +18,10 @@ class Tables extends Base {
 	 */
 	protected $description = 'List all tables in database';
 
+	protected $options = array(
+			array('count', null, InputOption::VALUE_NONE, 'Display number of rows for each table.', null),
+	);
+
 	/**
 	 * Execute the command.
 	 *
@@ -25,19 +29,9 @@ class Tables extends Base {
 	 */
 	public function fire()
 	{
-		$this->display($this->laravel->select->getTables($this->input->getOption('count')));
-	}
+		parent::fire();
 
-	/**
-	 * Get the console command arguments.
-	 *
-	 * @return array
-	 */
-	protected function getOptions()
-	{
-		return array(
-			array('count', null, InputOption::VALUE_NONE, 'Display number of rows for each table.', null),
-		);
+		$this->display($this->laravel->select->getTables($this->input->getOption('count')));
 	}
 
 }

@@ -31,16 +31,25 @@ class DatabaseConnection {
 	 *
 	 * @var \Illuminate\Database\DatabaseManager
 	 */
-	private $db;
+	private $databaseManager;
+
+	/**
+	 * Current database connection.
+	 *
+	 * @var string
+	 */
+	private $connectionName;
 
 	/**
 	 * Class instantiator.
 	 *
-	 * @param DatabaseManager $db
+	 * @param DatabaseManager $databaseManager
 	 */
-	public function __construct(DatabaseManager $db)
+	public function __construct(DatabaseManager $databaseManager)
 	{
-		$this->db = $db;
+		$this->databaseManager = $databaseManager;
+
+		$this->connectionName = $this->databaseManager->getDefaultConnection();
 	}
 
 	/**
@@ -53,8 +62,8 @@ class DatabaseConnection {
 	{
 		$method = $this->isSelect($statement) ? 'select' : 'statement';
 
-		return $this->db->{$method}(
-			$this->db->raw($statement)
+		return $this->connection()->{$method}(
+			$this->connection()->raw($statement)
 		);
 	}
 
@@ -84,7 +93,7 @@ class DatabaseConnection {
 	 */
 	public function getSelectTablesStatement()
 	{
-		switch ($this->db->connection()->getConfig('driver'))
+		switch ($this->connection()->getConfig('driver'))
 		{
 			case 'pgsql':
 				return "select table_schema, table_name from information_schema.tables where table_type = 'BASE TABLE' and table_schema not in ('pg_catalog', 'information_schema');";
@@ -92,7 +101,7 @@ class DatabaseConnection {
 			case 'mysql':
 				return sprintf(
 							'select table_schema, table_name from information_schema.tables where table_schema=\'%s\';',
-							$this->db->connection()->getDatabaseName()
+							$this->connection()->getDatabaseName()
 						);
 				break;
 
@@ -102,7 +111,7 @@ class DatabaseConnection {
 //				break;
 
 			default: 
-				$error = 'Database driver not supported: '.$this->db->getConfig('driver');
+				$error = 'Database driver not supported: '.$this->connection()->getConfig('driver');
 				throw new Exception($error);
 				break;
 		}
@@ -163,4 +172,25 @@ class DatabaseConnection {
 	{
 		return strtolower(explode(' ', $statement)[0]) === 'select';
 	}
+
+	/**
+	 * @param $connectionName
+	 */
+	public function setConnection($connectionName)
+	{
+		$this->connectionName = ! is_null($connectionName)
+								? $connectionName
+								: $this->databaseManager->getDefaultConnection();
+	}
+
+	/**
+	 * Get the current connection.
+	 *
+	 * @return \Illuminate\Database\Connection
+	 */
+	private function connection()
+	{
+		return $this->databaseManager->connection($this->connectionName);
+	}
+
 }

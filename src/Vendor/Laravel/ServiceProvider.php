@@ -44,10 +44,32 @@ use PragmaRX\Support\ServiceProvider as PragmaRXServiceProvider;
 
 class ServiceProvider extends PragmaRXServiceProvider {
 
+	/**
+	 * The package vendor name (lower case).
+	 *
+	 * @var string
+	 */
 	protected $packageVendor = 'pragmarx';
+
+	/**
+	 * The package vendor name in caps.
+	 *
+	 * @var string
+	 */
 	protected $packageVendorCapitalized = 'PragmaRX';
 
+	/**
+	 * The package name (lower case).
+	 *
+	 * @var string
+	 */
 	protected $packageName = 'select';
+
+	/**
+	 * The package name (capitalized).
+	 *
+	 * @var string
+	 */
 	protected $packageNameCapitalized = 'Select';
 
 	/**

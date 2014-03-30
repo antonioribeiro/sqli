@@ -23,7 +23,9 @@ class SqlI extends Base {
 	 */
 	public function fire()
 	{
-		$this->display($this->laravel->select->lSql());
+		parent::fire();
+
+		$this->display($this->laravel->select->sqlI($this->input->getOption('database')));
 	}
 
 }

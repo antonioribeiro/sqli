@@ -23,6 +23,8 @@ class Update extends Base {
 	 */
 	public function fire()
 	{
+		parent::fire();
+
 		$this->display($this->laravel->select->execute($this->name, $this->input->getArgument('query')));
 	}
 
