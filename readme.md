@@ -47,7 +47,7 @@ To exit, just type `CTRL-C`, `CTRL-D` or `quit`.
 
 ### Other Artisan Commands
 
-You'll have access yo the most common DML commands, via Artisan:
+You don't need to enter sqli to execute commands, you have access to the most common DML commands via direct Artisan commands:
 
     select
     insert
