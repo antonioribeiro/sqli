@@ -21,7 +21,7 @@
 
 namespace PragmaRX\SqlI\Vendor\Laravel;
 
-use PragmaRX\SqlI\Select;
+use PragmaRX\SqlI\SqlI;
 use PragmaRX\SqlI\Support\DatabaseConnection;
 use PragmaRX\SqlI\Support\Statement;
 use PragmaRX\SqlI\Support\WorkingDirectory;
@@ -112,7 +112,7 @@ class ServiceProvider extends PragmaRXServiceProvider {
 
 			$database = new DatabaseConnection($app['db']);
 
-			return new Select(
+			return new SqlI(
 				$database,
 				new Statement(new WorkingDirectory),
 				new SqlInteractive($database, $app['select.sqli.command'])

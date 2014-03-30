@@ -53,9 +53,9 @@ class SqlI
 	 *
 	 * @param DatabaseConnection $database
 	 * @param Statement $statement
-	 * @param SqlI $sqlI
+	 * @param \PragmaRX\SqlI\Support\SqlInteractive $sqlI
 	 */
-	public function __construct(DatabaseConnection $database, Statement $statement, SqlI $sqlI)
+	public function __construct(DatabaseConnection $database, Statement $statement, SqlInteractive $sqlI)
 	{
 		$this->statement = $statement;
 		
