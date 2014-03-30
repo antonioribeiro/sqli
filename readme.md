@@ -30,7 +30,7 @@ You can get a list of your tables by running:
 
     sqli> tables count
 
-The 'count' option it's optional:
+`count` option is optional:
 
     +--------------+-----------------------------+-----------+
     | table_schema | table_name                  | row_count |
