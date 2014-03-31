@@ -14,7 +14,7 @@ It's like tinker for SQL, just run
 
 And execute whatever sql query you like in your sql:
 
-    sqli> select email from users;
+    postgresql:laravel> select email from users;
 
 And you should see it this way:
 
@@ -28,7 +28,7 @@ And you should see it this way:
 
 You can get a list of your tables by running:
 
-    sqli> tables count
+    postgresql:laravel> tables count
 
 `count` option is optional:
 
@@ -42,6 +42,24 @@ You can get a list of your tables by running:
     | public       | actors                      | 3431326   |
     | public       | movies                      | 1764727   |
     +--------------+-----------------------------+-----------+
+
+You can change your current database connection by:
+
+    postgresql:laravel> database mysql
+    mysql:staging>
+
+You can list all commands by executing
+
+    postgresql:laravel> help
+
+    +----------+------------------------------------------------------------------------------+
+    | command  | description                                                                  |
+    +----------+------------------------------------------------------------------------------+
+    | quit     | Exit interface.                                                              |
+    | tables   | List all tables. Use "tables count" to list with row count.                  |
+    | help     | Show this help.                                                              |
+    | database | Change the current database connection. Usage: "database [connection name]". |
+    +----------+------------------------------------------------------------------------------+
 
 To exit, just type `CTRL-C`, `CTRL-D` or `quit`.
 
