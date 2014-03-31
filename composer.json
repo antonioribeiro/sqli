@@ -1,9 +1,9 @@
 {
     "name": "pragmarx/sqli",
 
-    "description": "Laravel 4 Blade on Select",
+    "description": "A Laravel 4 Artisan SQL Interactive Interface",
 
-    "keywords": ["select", "whitelist", "blacklist", "laravel"],
+    "keywords": ["sql", "sqli", "query", "laravel", "artisan"],
 
     "license": "BSD-3-Clause",
 
@@ -35,7 +35,7 @@
     "extra": {
             "component": "package",
             "branch-alias": {
-                    "dev-master": "0.7-dev"
+                    "dev-master": "0.5-dev"
             }
     },
 
