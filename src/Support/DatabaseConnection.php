@@ -198,19 +198,9 @@ class DatabaseConnection {
 	 *
 	 * @return string
 	 */
-	public function getConnectionName()
+	public function getConnectioName()
 	{
 		return $this->connectionName;
-	}
-
-	/**
-	 * Get the current database name.
-	 *
-	 * @return string
-	 */
-	public function getDatabaseName()
-	{
-		return $this->connection()->getDatabaseName();
 	}
 
 }
