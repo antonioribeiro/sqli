@@ -132,7 +132,7 @@ class ServiceProvider extends PragmaRXServiceProvider {
 		{
 			$app['select.loaded'] = true;
 
-			$database = new DatabaseConnection($app['db']);
+			$database = new DatabaseConnection($app['db'], $app['config']);
 
 			return new SqlI(
 				$database,
