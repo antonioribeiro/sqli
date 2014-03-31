@@ -22,6 +22,7 @@
 namespace PragmaRX\SqlI\Support;
 
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Config\Repository as Config;
 use Exception;
 
 class DatabaseConnection {
@@ -41,13 +42,23 @@ class DatabaseConnection {
 	private $connectionName;
 
 	/**
+	 * Configuration object.
+	 *
+	 * @var \Illuminate\Config\Repository
+	 */
+	private $config;
+
+	/**
 	 * Class instantiator.
 	 *
 	 * @param DatabaseManager $databaseManager
+	 * @param Config $config
 	 */
-	public function __construct(DatabaseManager $databaseManager)
+	public function __construct(DatabaseManager $databaseManager, Config $config)
 	{
 		$this->databaseManager = $databaseManager;
+
+		$this->config = $config;
 
 		$this->connectionName = $this->databaseManager->getDefaultConnection();
 	}
@@ -211,6 +222,19 @@ class DatabaseConnection {
 	public function getDatabaseName()
 	{
 		return $this->connection()->getDatabaseName();
+	}
+
+	/**
+	 * Check if a database connection name is configured.
+	 *
+	 * @param string $name
+	 * @return string
+	 */
+	public function databaseExists($name)
+	{
+		$connections = $this->config->get('database.connections');
+
+		return isset($connections[$name]);
 	}
 
 }
