@@ -212,7 +212,7 @@ class SqlInteractive
 			}
 			catch (\PDOException $e)
 			{
-				$this->outputError('Could not connect to '.$this->databaseConnection->getConnectionName().'.');
+				$this->outputError('Could not connect to '.$this->databaseConnection->getConnectionName().', please check if your connection is properly configured.');
 
 				$this->quit();
 			}

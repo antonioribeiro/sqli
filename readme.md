@@ -168,11 +168,11 @@ But you can also escape them with \
 
 Require the Select package:
 
-    composer require pragmarx/select ~0
+    composer require "pragmarx/sqli" "0.*"
 
 Add the service provider to your app/config/app.php:
 
-    'PragmaRX\Select\Vendor\Laravel\ServiceProvider',
+    'PragmaRX\SqlI\Vendor\Laravel\ServiceProvider',
 
 ### Author
 
