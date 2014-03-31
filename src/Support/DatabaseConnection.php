@@ -193,4 +193,14 @@ class DatabaseConnection {
 		return $this->databaseManager->connection($this->connectionName);
 	}
 
+	/**
+	 * Get the current connection name.
+	 *
+	 * @return string
+	 */
+	public function getConnectioName()
+	{
+		return $this->connectionName;
+	}
+
 }
