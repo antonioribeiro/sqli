@@ -4,7 +4,7 @@
 
 ## Laravel Artisan Select
 
-A Laravel Artisan SQL Interactive Interface, plus a handful of Artisan commands to execute SQL queries.
+A Laravel 4 Artisan SQL Interactive Interface, plus a handful of Artisan commands to execute SQL queries.
 
 ### sqli
 
