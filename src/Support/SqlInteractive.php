@@ -53,7 +53,7 @@ class SqlInteractive
 	 *
 	 * @var string
 	 */
-	private $defaultHistoryFileName = '.sqli_history';
+	private $defaultHistoryFileName = '.lsqli_history';
 
 	/**
 	 * Default prompt string.
@@ -232,7 +232,7 @@ class SqlInteractive
 
 		do
 		{
-			$prompt = $lines > 0 ? '> ' : ($this->getOption('showtime') ? date('G:i:s ') : '') . $this->getOption('prompt');
+			$prompt = $lines > 0 ? '> ' : $this->makePrompt();
 
 			if ($this->readlineSupport)
 			{
@@ -519,4 +519,14 @@ class SqlInteractive
 		return $result;
 	}
 
+	/**
+	 * @return string
+	 */
+	private function makePrompt()
+	{
+		return ($this->getOption('showtime') ? date('G:i:s ') : '') .
+				$this->databaseConnection->getConnectionName().
+				':'.
+				$this->databaseConnection->getDatabaseName().'> ';
+	}
 }
