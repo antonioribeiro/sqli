@@ -210,6 +210,12 @@ class SqlInteractive
 
 				$this->execute($__code__);
 			}
+			catch (\PDOException $e)
+			{
+				$this->outputError('Could not connect to '.$this->databaseConnection->getConnectionName().'.');
+
+				$this->quit();
+			}
 			catch (\Exception $e)
 			{
 				echo ($_ = $e) . "\n";
@@ -445,11 +451,11 @@ class SqlInteractive
 	 * Quit the application.
 	 *
 	 */
-	private function quit()
+	private function quit($message = 'I quit.')
 	{
 		$this->quit = true;
 
-		return 'I quit.';
+		return $message;
 	}
 
 	/**
