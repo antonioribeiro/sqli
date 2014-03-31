@@ -524,6 +524,8 @@ class SqlInteractive
 			}
 		}
 
+		uasort($result, make_comparer('command'));
+
 		$this->output($result);
 
 		return true;
