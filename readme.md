@@ -2,11 +2,9 @@
 
 [![Latest Stable Version](https://poser.pugx.org/pragmarx/sqli/v/stable.png)](https://packagist.org/packages/pragmarx/sqli) [![License](https://poser.pugx.org/pragmarx/sqli/license.png)](https://packagist.org/packages/pragmarx/sqli)
 
-## Laravel Artisan Select
-
 A Laravel 4 Artisan SQL Interactive Interface, plus a handful of Artisan commands to execute SQL queries.
 
-### sqli
+## sqli
 
 It's like tinker for SQL, just run
 
@@ -63,7 +61,7 @@ You can list all commands by executing
 
 To exit, just type `CTRL-C`, `CTRL-D` or `quit`.
 
-### Other Artisan Commands
+## Other Artisan Commands
 
 You don't need to enter sqli to execute commands, you have access to the most common DML commands via direct Artisan commands:
 
@@ -80,7 +78,7 @@ And a command for listing tables:
 
     tables
 
-### Syntax
+## Syntax
 
 The syntax could not be simpler, just execute 
 
@@ -109,7 +107,7 @@ And it'll be as if you where in your sql interface:
 
     a sql call removeOldPosts()
 
-### Command 'table'
+## Command 'table'
 
 The command
 
@@ -128,7 +126,7 @@ Will give you a list of your tables with an optional row count:
     | public       | movies                      | 1764727   |
     +--------------+-----------------------------+-----------+
 
-### Too many columns aren't good to look at?
+## Too many columns aren't good to look at?
 
 Use the `less` command to help you with that:
 
@@ -144,7 +142,7 @@ Should give you a scrollable view of your table:
     | 41 | paul@newman.com              |             |           |                                            |                     |                     |                                                              |                     | Paul           | Newman         | 2014-03-29 18:38:39.998522 | 2014-03-29 18:32:22.489968 |                                                              |           |             |           |           |             |            |              |                  |                   |                 |                   |                 |                 |
     +----+------------------------------+-------------+-----------+--------------------------------------------+---------------------+---------------------+--------------------------------------------------------------+---------------------+----------------+----------------+----------------------------+----------------------------+--------------------------------------------------------------+-----------+-------------+-----------+-----------+-------------+------------+--------------+------------------+-------------------+-----------------+-------------------+-----------------+-----------------+
 
-### Drawbacks
+## Drawbacks
 
 When passing arguments to scripts Linux based systems may remove quotes and misunderstand your parentheses in queries, you if you need to use them you'll have to double quote it:
 
@@ -158,13 +156,13 @@ But you can also escape them with \
 
     a update users set created_at = \'NOW\'
 
-### Installation
+## Installation
 
-#### Requirements
+### Requirements
 
 - Laravel 4.1+
 
-#### Installing
+### Installing
 
 Require the Select package:
 
@@ -174,14 +172,14 @@ Add the service provider to your app/config/app.php:
 
     'PragmaRX\SqlI\Vendor\Laravel\ServiceProvider',
 
-### Author
+## Author
 
 [Antonio Carlos Ribeiro](http://twitter.com/iantonioribeiro) 
 
-### License
+## License
 
 Select is licensed under the BSD 3-Clause License - see the `LICENSE` file for details
 
-### Contributing
+## Contributing
 
 Pull requests and issues are more than welcome.
