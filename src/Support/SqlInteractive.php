@@ -255,7 +255,7 @@ class SqlInteractive
 			if ($line === false)
 			{
 				echo "\n";
-				
+
 				return $this->quit();
 			}
 
