@@ -254,6 +254,8 @@ class SqlInteractive
 			// If the input was empty, return false; this breaks the loop.
 			if ($line === false)
 			{
+				echo "\n";
+				
 				return $this->quit();
 			}
 
@@ -341,10 +343,9 @@ class SqlInteractive
 
 				$error = true;
 			}
-
-			return $this->output($result, isset($error));
 		}
 
+		return $this->output($result, isset($error));
 	}
 
 	/**
@@ -451,11 +452,11 @@ class SqlInteractive
 	 * Quit the application.
 	 *
 	 */
-	private function quit($message = 'I quit.')
+	private function quit()
 	{
 		$this->quit = true;
 
-		return $message;
+		return 'I quit.';
 	}
 
 	/**
