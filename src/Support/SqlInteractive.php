@@ -80,6 +80,7 @@ class SqlInteractive
 		'die' => array('method' => 'quit', 'description' => ''),
 		'tables' => array('method' => 'tables', 'description' => 'List all tables. Use "tables count" to list with row count.'),
 		'help' => array('method' => 'help', 'description' => 'Show this help.'),
+		'database' => array('method' => 'changeDatabase', 'description' => 'Change the current database connection. Usage: "database [connection name]".'),
 	);
 
 	/**
@@ -334,9 +335,10 @@ class SqlInteractive
 
 				$error = true;
 			}
+
+			return $this->output($result, isset($error));
 		}
 
-		return $this->output($result, isset($error));
 	}
 
 	/**
@@ -496,7 +498,13 @@ class SqlInteractive
 	 */
 	private function tables($command)
 	{
-		return $this->databaseConnection->getAllTables(strpos(strtolower($command), 'count') !== false);
+		$this->output(
+			$this->databaseConnection->getAllTables(
+				strpos(strtolower($command), 'count') !== false
+			)
+		);
+
+		return true;
 	}
 
 	/**
@@ -516,7 +524,9 @@ class SqlInteractive
 			}
 		}
 
-		return $result;
+		$this->output($result);
+
+		return true;
 	}
 
 	/**
@@ -528,5 +538,30 @@ class SqlInteractive
 				$this->databaseConnection->getConnectionName().
 				':'.
 				$this->databaseConnection->getDatabaseName().'> ';
+	}
+
+	/**
+	 * Change the current database connection.
+	 *
+	 */
+	private function changeDatabase($command)
+	{
+		$parts = explode(' ', $command);
+
+		if (count($parts) < 2)
+		{
+			$this->outputError('Connection name is needed.');
+		}
+		else
+		if ( ! $this->databaseConnection->databaseExists($parts[1]))
+		{
+			$this->outputError("Connection $parts[1] does not exists.");
+		}
+		else
+		{
+			$this->databaseConnection->setConnection($parts[1]);
+		}
+
+		return true;
 	}
 }
