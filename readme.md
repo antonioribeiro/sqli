@@ -1,6 +1,6 @@
 # sqli v0.5
 
-[![Latest Stable Version](https://poser.pugx.org/pragmarx/select/v/stable.png)](https://packagist.org/packages/pragmarx/select) [![License](https://poser.pugx.org/pragmarx/select/license.png)](https://packagist.org/packages/pragmarx/select) [![Build Status](https://travis-ci.org/antonioribeiro/select.png)](https://travis-ci.org/antonioribeiro/select)
+[![Latest Stable Version](https://poser.pugx.org/pragmarx/sqli/v/stable.png)](https://packagist.org/packages/pragmarx/sqli) [![License](https://poser.pugx.org/pragmarx/sqli/license.png)](https://packagist.org/packages/pragmarx/sqli)
 
 ## Laravel Artisan Select
 
