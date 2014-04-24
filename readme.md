@@ -166,6 +166,10 @@ But you can also escape them with \
 
 Require the Select package:
 
+    composer require "pragmarx/sqli" "0.*"
+
+Due to a bug on Composer, on Windows clients you might need to add a colon in the requirement command line:
+
     composer require "pragmarx/sqli":"0.*"
 
 Add the service provider to your app/config/app.php:
