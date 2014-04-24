@@ -166,7 +166,7 @@ But you can also escape them with \
 
 Require the Select package:
 
-    composer require "pragmarx/sqli" "0.*"
+    composer require "pragmarx/sqli":"0.*"
 
 Add the service provider to your app/config/app.php:
 
