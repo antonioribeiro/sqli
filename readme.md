@@ -164,13 +164,9 @@ But you can also escape them with \
 
 ### Installing
 
-Require the Select package:
+Require the sqli package by **executing** the following command in your command line:
 
     composer require "pragmarx/sqli" "0.*"
-
-Due to a bug on Composer, on Windows clients you might need to add a colon in the requirement command line:
-
-    composer require "pragmarx/sqli":"0.*"
 
 Add the service provider to your app/config/app.php:
 
@@ -182,7 +178,7 @@ Add the service provider to your app/config/app.php:
 
 ## License
 
-Select is licensed under the BSD 3-Clause License - see the `LICENSE` file for details
+sqli is licensed under the BSD 3-Clause License - see the `LICENSE` file for details
 
 ## Contributing
 
