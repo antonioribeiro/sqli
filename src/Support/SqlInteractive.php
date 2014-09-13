@@ -132,7 +132,7 @@ class SqlInteractive
 
 		$this->readlineSupport = true;
 
-		if (!function_exists('readline') || getenv('TERM') == 'dumb')
+		if (!function_exists('readline') || env('TERM') == 'dumb')
 		{
 			$this->readlineSupport = false;
 		}
@@ -294,7 +294,7 @@ class SqlInteractive
 
 		if ( ! is_writable($file))
 		{
-			$file = getenv('HOME') . '/'.$this->defaultHistoryFileName;
+			$file = env('HOME') . '/'.$this->defaultHistoryFileName;
 		}
 
 		return $file;
