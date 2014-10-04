@@ -135,7 +135,7 @@ class DatabaseConnection {
 	 */
 	private function addRowCount(&$tables)
 	{
-		foreach($tables as $key => $row)
+		foreach ($tables as $key => $row)
 		{
 			$count = $this->execute("select count(*) as count from ".$row->table_name);
 
