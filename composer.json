@@ -17,7 +17,7 @@
 
     "require": {
         "php": ">=5.3.7",
-        "pragmarx/support": "~0.2"
+        "pragmarx/support": "<0.5"
     },
 
     "require-dev": {
