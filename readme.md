@@ -1,6 +1,6 @@
 # sqli
 
-[![Latest Stable Version](https://poser.pugx.org/pragmarx/sqli/v/stable.png)](https://packagist.org/packages/pragmarx/sqli) [![License](https://poser.pugx.org/pragmarx/sqli/license.png)](https://packagist.org/packages/pragmarx/sqli)
+[![Latest Stable Version](https://img.shields.io/packagist/v/pragmarx/sqli.svg?style=flat-square)](https://packagist.org/packages/pragmarx/sqli) [![License](https://img.shields.io/badge/license-BSD_3_Clause-brightgreen.svg?style=flat-square)](LICENSE) [![Downloads](https://img.shields.io/packagist/dt/pragmarx/sqli.svg?style=flat-square)](https://packagist.org/packages/pragmarx/sqli)
 
 A Laravel 4 & 5 Artisan SQL Interactive Interface, plus a handful of Artisan commands to execute SQL queries.
 
