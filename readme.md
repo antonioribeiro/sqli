@@ -172,7 +172,7 @@ Require the Select package:
 
 Add the service provider to your app/config/app.php:
 
-    'PragmaRX\SqlI\Vendor\Laravel\ServiceProvider',
+    'PragmaRX\Sqli\Vendor\Laravel\ServiceProvider',
 
 ### Author
 

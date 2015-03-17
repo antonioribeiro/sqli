@@ -1,7 +1,7 @@
 <?php 
 
 /**
- * Part of the SqlI package.
+ * Part of the Sqli package.
  *
  * NOTICE OF LICENSE
  *
@@ -11,7 +11,7 @@
  * bundled with this package in the LICENSE file.  It is also available at
  * the following URL: http://www.opensource.org/licenses/BSD-3-Clause
  *
- * @package    SqlI
+ * @package    Sqli
  * @version    0.1.0
  * @author     Antonio Carlos Ribeiro @ PragmaRX
  * @license    BSD License (3-clause)
@@ -19,26 +19,26 @@
  * @link       http://pragmarx.com
  */
 
-namespace PragmaRX\SqlI\Vendor\Laravel;
+namespace PragmaRX\Sqli\Vendor\Laravel;
 
-use PragmaRX\SqlI\SqlI;
-use PragmaRX\SqlI\Support\DatabaseConnection;
-use PragmaRX\SqlI\Support\Statement;
-use PragmaRX\SqlI\Support\WorkingDirectory;
-use PragmaRX\SqlI\Support\SqlInteractive;
+use PragmaRX\Sqli\Sqli;
+use PragmaRX\Sqli\Support\DatabaseConnection;
+use PragmaRX\Sqli\Support\Statement;
+use PragmaRX\Sqli\Support\WorkingDirectory;
+use PragmaRX\Sqli\Support\Sqlinteractive;
 
 use PragmaRX\Support\Config;
 use PragmaRX\Support\Filesystem;
 
 use Symfony\Component\Finder\Finder;
 
-use PragmaRX\SqlI\Vendor\Laravel\Artisan\Select as SelectCommand;
-use PragmaRX\SqlI\Vendor\Laravel\Artisan\Delete as DeleteCommand;
-use PragmaRX\SqlI\Vendor\Laravel\Artisan\Insert as InsertCommand;
-use PragmaRX\SqlI\Vendor\Laravel\Artisan\Update as UpdateCommand;
-use PragmaRX\SqlI\Vendor\Laravel\Artisan\Sql    as SqlCommand;
-use PragmaRX\SqlI\Vendor\Laravel\Artisan\SqlI   as SqlICommand;
-use PragmaRX\SqlI\Vendor\Laravel\Artisan\Tables as TablesCommand;
+use PragmaRX\Sqli\Vendor\Laravel\Artisan\Select as SelectCommand;
+use PragmaRX\Sqli\Vendor\Laravel\Artisan\Delete as DeleteCommand;
+use PragmaRX\Sqli\Vendor\Laravel\Artisan\Insert as InsertCommand;
+use PragmaRX\Sqli\Vendor\Laravel\Artisan\Update as UpdateCommand;
+use PragmaRX\Sqli\Vendor\Laravel\Artisan\Sql    as SqlCommand;
+use PragmaRX\Sqli\Vendor\Laravel\Artisan\Sqli   as SqliCommand;
+use PragmaRX\Sqli\Vendor\Laravel\Artisan\Tables as TablesCommand;
 
 use PragmaRX\Support\ServiceProvider as PragmaRXServiceProvider;
 
@@ -96,7 +96,7 @@ class ServiceProvider extends PragmaRXServiceProvider {
 		$this->registerInsertCommand();
 		$this->registerUpdateCommand();
 		$this->registerSqlCommand();
-		$this->registerSqlICommand();
+		$this->registerSqliCommand();
 		$this->registerTablesCommand();
 
 		$this->registerSelect();
@@ -134,10 +134,10 @@ class ServiceProvider extends PragmaRXServiceProvider {
 
 			$database = new DatabaseConnection($app['db'], $app['config']);
 
-			return new SqlI(
+			return new Sqli(
 				$database,
 				new Statement(new WorkingDirectory),
-				new SqlInteractive($database, $app['select.sqli.command'])
+				new Sqlinteractive($database, $app['select.sqli.command'])
 			);
 		});
 	}
@@ -212,11 +212,11 @@ class ServiceProvider extends PragmaRXServiceProvider {
 	 *
 	 * @return void
 	 */
-	private function registerSqlICommand()
+	private function registerSqliCommand()
 	{
 		$this->app['select.sqli.command'] = $this->app->share(function($app)
 		{
-			return new SqlICommand();
+			return new SqliCommand();
 		});
 	}
 

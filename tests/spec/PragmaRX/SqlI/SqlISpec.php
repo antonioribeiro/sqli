@@ -1,10 +1,10 @@
 <?php
 
-namespace spec\PragmaRX\SqlI;
+namespace spec\PragmaRX\Sqli;
 
 use PhpSpec\ObjectBehavior;
 
-class SqlISpec extends ObjectBehavior
+class SqliSpec extends ObjectBehavior
 {
 
 }

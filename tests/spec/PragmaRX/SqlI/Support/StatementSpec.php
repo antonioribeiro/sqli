@@ -1,10 +1,10 @@
 <?php
 
-namespace spec\PragmaRX\SqlI\Support;
+namespace spec\PragmaRX\Sqli\Support;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use PragmaRX\SqlI\Support\WorkingDirectory;
+use PragmaRX\Sqli\Support\WorkingDirectory;
 
 class StatementSpec extends ObjectBehavior
 {
@@ -15,7 +15,7 @@ class StatementSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('PragmaRX\SqlI\Support\Statement');
+        $this->shouldHaveType('PragmaRX\Sqli\Support\Statement');
     }
 
 	function it_selects_all_rows_from_users_table()

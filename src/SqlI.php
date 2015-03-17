@@ -1,7 +1,7 @@
 <?php 
 
 /**
- * Part of the SqlI package.
+ * Part of the Sqli package.
  *
  * NOTICE OF LICENSE
  *
@@ -11,7 +11,7 @@
  * bundled with this package in the LICENSE file.  It is also available at
  * the following URL: http://www.opensource.org/licenses/BSD-3-Clause
  *
- * @package    SqlI
+ * @package    Sqli
  * @version    0.1.0
  * @author     Antonio Carlos Ribeiro @ PragmaRX
  * @license    BSD License (3-clause)
@@ -19,13 +19,13 @@
  * @link       http://pragmarx.com
  */
 
-namespace PragmaRX\SqlI;
+namespace PragmaRX\Sqli;
 
-use PragmaRX\SqlI\Support\DatabaseConnection;
-use PragmaRX\SqlI\Support\Statement;
-use PragmaRX\SqlI\Support\SqlInteractive;
+use PragmaRX\Sqli\Support\DatabaseConnection;
+use PragmaRX\Sqli\Support\Statement;
+use PragmaRX\Sqli\Support\Sqlinteractive;
 
-class SqlI
+class Sqli
 {
 	/**
 	 * DatabaseConnection object.
@@ -44,7 +44,7 @@ class SqlI
 	/**
 	 * The SQL RePL (read execute print loop) interface.
 	 *
-	 * @var Support\SqlI
+	 * @var Support\Sqli
 	 */
 	private $sqlI;
 
@@ -53,9 +53,9 @@ class SqlI
 	 *
 	 * @param DatabaseConnection $database
 	 * @param Statement $statement
-	 * @param \PragmaRX\SqlI\Support\SqlInteractive $sqlI
+	 * @param \PragmaRX\Sqli\Support\Sqlinteractive $sqlI
 	 */
-	public function __construct(DatabaseConnection $database, Statement $statement, SqlInteractive $sqlI)
+	public function __construct(DatabaseConnection $database, Statement $statement, Sqlinteractive $sqlI)
 	{
 		$this->statement = $statement;
 		
