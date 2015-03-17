@@ -218,4 +218,14 @@ class DatabaseConnection {
 		return isset($connections[$name]);
 	}
 
+	/**
+	 * Get a list of database connections.
+	 *
+	 * @return array
+	 */
+	public function getConnections()
+	{
+		return $this->config->get('database.connections');
+	}
+
 }

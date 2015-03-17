@@ -61,6 +61,8 @@ class Sqlinteractive
 		'tables' => array('method' => 'tables', 'description' => 'List all tables. Use "tables count" to list with row count.'),
 		'help' => array('method' => 'help', 'description' => 'Show this help.'),
 		'database' => array('method' => 'changeDatabase', 'description' => 'Change the current database connection. Usage: "database [connection name]".'),
+		'databases' => array('method' => 'connections', 'description' => 'Show a list of database connections.'),
+		'connections' => array('method' => 'connections', 'description' => 'Show a list of database connections.'),
 	);
 
 	/**
@@ -553,4 +555,19 @@ class Sqlinteractive
 
 		return true;
 	}
+
+	private function connections()
+	{
+		$result = array();
+
+		foreach ($this->databaseConnection->getConnections() as $key => $connection)
+		{
+			$result[] = array('Connection Name' => $key, 'Driver' => $connection['driver'], 'Database' => $connection['database'], 'Host' => $connection['host']);
+		}
+
+		$this->output($result);
+
+		return true;
+	}
+
 }
