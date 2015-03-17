@@ -1,9 +1,9 @@
 {
     "name": "pragmarx/sqli",
 
-    "description": "A Laravel 4 Artisan SQL Interactive Interface",
+    "description": "A Laravel Artisan SQL Interactive Interface",
 
-    "keywords": ["sql", "sqli", "query", "laravel", "artisan"],
+    "keywords": ["sql", "sqli", "repl", "query", "laravel", "artisan"],
 
     "license": "BSD-3-Clause",
 
@@ -17,7 +17,7 @@
 
     "require": {
         "php": ">=5.3.7",
-        "pragmarx/support": "~0.2"
+        "pragmarx/support": "~0.6"
     },
 
     "require-dev": {
