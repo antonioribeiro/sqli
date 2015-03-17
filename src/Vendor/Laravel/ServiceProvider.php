@@ -211,13 +211,13 @@ class ServiceProvider extends PragmaRXServiceProvider {
 	}
 
 	/**
-	 * Get the root directory for this ServiceProvider
-	 * 
+	 * Get the current package directory.
+	 *
 	 * @return string
 	 */
-	public function getRootDirectory()
+	public function getPackageDir()
 	{
-		return __DIR__.'/../..';
+		return __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..';
 	}
 
 }
