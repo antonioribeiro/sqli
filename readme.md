@@ -1,8 +1,8 @@
-# sqli v0.5
+# sqli
 
 [![Latest Stable Version](https://poser.pugx.org/pragmarx/sqli/v/stable.png)](https://packagist.org/packages/pragmarx/sqli) [![License](https://poser.pugx.org/pragmarx/sqli/license.png)](https://packagist.org/packages/pragmarx/sqli)
 
-A Laravel 4 Artisan SQL Interactive Interface, plus a handful of Artisan commands to execute SQL queries.
+A Laravel 4 & 5 Artisan SQL Interactive Interface, plus a handful of Artisan commands to execute SQL queries.
 
 ## sqli
 
@@ -164,9 +164,9 @@ But you can also escape them with \
 
 ### Installing
 
-Require the sqli package by **executing** the following command in your command line:
+Require the package using [Composer](https://getcomposer.org/):
 
-    composer require "pragmarx/sqli" "0.*"
+    composer require pragmarx/sqli
 
 Add the service provider to your app/config/app.php:
 
