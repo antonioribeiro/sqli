@@ -1,9 +1,9 @@
 {
     "name": "pragmarx/sqli",
 
-    "description": "A Laravel 4 Artisan SQL Interactive Interface",
+    "description": "A Laravel Artisan SQL Interactive Interface",
 
-    "keywords": ["sql", "sqli", "query", "laravel", "artisan"],
+    "keywords": ["sql", "sqli", "repl", "query", "laravel", "artisan"],
 
     "license": "BSD-3-Clause",
 
@@ -17,7 +17,7 @@
 
     "require": {
         "php": ">=5.3.7",
-        "pragmarx/support": "<0.5"
+        "pragmarx/support": "~0.6"
     },
 
     "require-dev": {
@@ -28,14 +28,14 @@
 
     "autoload": {
         "psr-4": {
-            "PragmaRX\\SqlI\\": "src/"
+            "PragmaRX\\Sqli\\": "src/"
         }
     },
 
     "extra": {
             "component": "package",
             "branch-alias": {
-                    "dev-master": "0.5-dev"
+                    "dev-master": "1.0-dev"
             }
     },
 

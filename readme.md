@@ -170,7 +170,7 @@ Require the sqli package by **executing** the following command in your command 
 
 Add the service provider to your app/config/app.php:
 
-    'PragmaRX\SqlI\Vendor\Laravel\ServiceProvider',
+    'PragmaRX\Sqli\Vendor\Laravel\ServiceProvider',
 
 ## Author
 

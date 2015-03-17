@@ -1,4 +1,4 @@
-<?php namespace PragmaRX\SqlI\Vendor\Laravel\Artisan;
+<?php namespace PragmaRX\Sqli\Vendor\Laravel\Artisan;
 
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
