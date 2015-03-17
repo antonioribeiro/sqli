@@ -3,25 +3,18 @@
 namespace PragmaRX\Sqli\Vendor\Laravel;
 
 use PragmaRX\Sqli\Sqli;
-use PragmaRX\Sqli\Support\DatabaseConnection;
 use PragmaRX\Sqli\Support\Statement;
-use PragmaRX\Sqli\Support\WorkingDirectory;
 use PragmaRX\Sqli\Support\Sqlinteractive;
-
-use PragmaRX\Support\Config;
-use PragmaRX\Support\Filesystem;
-
-use Symfony\Component\Finder\Finder;
-
+use PragmaRX\Sqli\Support\WorkingDirectory;
+use PragmaRX\Sqli\Support\DatabaseConnection;
+use PragmaRX\Sqli\Vendor\Laravel\Artisan\Sql as SqlCommand;
+use PragmaRX\Sqli\Vendor\Laravel\Artisan\Sqli as SqliCommand;
+use PragmaRX\Support\ServiceProvider as PragmaRXServiceProvider;
 use PragmaRX\Sqli\Vendor\Laravel\Artisan\Select as SelectCommand;
 use PragmaRX\Sqli\Vendor\Laravel\Artisan\Delete as DeleteCommand;
 use PragmaRX\Sqli\Vendor\Laravel\Artisan\Insert as InsertCommand;
 use PragmaRX\Sqli\Vendor\Laravel\Artisan\Update as UpdateCommand;
-use PragmaRX\Sqli\Vendor\Laravel\Artisan\Sql    as SqlCommand;
-use PragmaRX\Sqli\Vendor\Laravel\Artisan\Sqli   as SqliCommand;
 use PragmaRX\Sqli\Vendor\Laravel\Artisan\Tables as TablesCommand;
-
-use PragmaRX\Support\ServiceProvider as PragmaRXServiceProvider;
 
 class ServiceProvider extends PragmaRXServiceProvider {
 
