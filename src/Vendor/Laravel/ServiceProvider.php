@@ -54,16 +54,6 @@ class ServiceProvider extends PragmaRXServiceProvider {
 	protected $packageNameCapitalized = 'Select';
 
 	/**
-	 * This is the boot method for this ServiceProvider
-	 *
-	 * @return void
-	 */
-	public function wakeUp()
-	{
-
-	}
-
-	/**
 	 * Register the service provider.
 	 *
 	 * @return void
@@ -81,14 +71,6 @@ class ServiceProvider extends PragmaRXServiceProvider {
 		$this->registerTablesCommand();
 
 		$this->registerSelect();
-
-		$this->commands('select.select.command');
-		$this->commands('select.delete.command');
-		$this->commands('select.insert.command');
-		$this->commands('select.update.command');
-		$this->commands('select.sql.command');
-		$this->commands('select.sqli.command');
-		$this->commands('select.tables.command');
 	}
 
 	/**
@@ -134,6 +116,8 @@ class ServiceProvider extends PragmaRXServiceProvider {
 		{
 			return new SelectCommand();
 		});
+
+		$this->commands('select.select.command');
 	}
 
 	/**
@@ -147,7 +131,9 @@ class ServiceProvider extends PragmaRXServiceProvider {
 		{
 			return new DeleteCommand();
 		});
-	}   
+
+		$this->commands('select.delete.command');
+	}
 
 	/**
 	 * Register the Insert Artisan command
@@ -160,6 +146,8 @@ class ServiceProvider extends PragmaRXServiceProvider {
 		{
 			return new InsertCommand();
 		});
+
+		$this->commands('select.insert.command');
 	}
 
 	/**
@@ -173,6 +161,8 @@ class ServiceProvider extends PragmaRXServiceProvider {
 		{
 			return new UpdateCommand();
 		});
+
+		$this->commands('select.update.command');
 	}
 
 	/**
@@ -186,6 +176,8 @@ class ServiceProvider extends PragmaRXServiceProvider {
 		{
 			return new SqlCommand();
 		});
+
+		$this->commands('select.sql.command');
 	}
 
 	/**
@@ -199,6 +191,8 @@ class ServiceProvider extends PragmaRXServiceProvider {
 		{
 			return new SqliCommand();
 		});
+
+		$this->commands('select.sqli.command');
 	}
 
 	/**
@@ -212,7 +206,9 @@ class ServiceProvider extends PragmaRXServiceProvider {
 		{
 			return new TablesCommand();
 		});
-	}   
+
+		$this->commands('select.tables.command');
+	}
 
 	/**
 	 * Get the root directory for this ServiceProvider
@@ -222,5 +218,6 @@ class ServiceProvider extends PragmaRXServiceProvider {
 	public function getRootDirectory()
 	{
 		return __DIR__.'/../..';
-	}    
+	}
+
 }
