@@ -171,7 +171,7 @@ But you can also escape them with \
 
 ### Requirements
 
-- Laravel 4.1+
+- Laravel 4.1+ / Laravel 5+
 
 ### Installing
 
