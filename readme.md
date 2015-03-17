@@ -41,6 +41,17 @@ You can get a list of your tables by running:
     | public       | movies                      | 1764727   |
     +--------------+-----------------------------+-----------+
 
+You can view a list of databases:
+
+    postgresql:laravel> databases
+    
+    +-----------------+--------+--------------------------+-----------+
+    | Connection Name | Driver | Database                 | Host      |
+    +-----------------+--------+--------------------------+-----------+
+    | postgres        | pgsql  | production               | localhost |
+    | tracker         | mysql  | tracker                  | localhost |
+    +-----------------+--------+--------------------------+-----------+
+
 You can change your current database connection by:
 
     postgresql:laravel> database mysql
