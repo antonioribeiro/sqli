@@ -169,7 +169,7 @@ But you can also escape them with \
 
 ## Command Line Completion
 
-All SQL commands tables names and columns are present in completion, just use TAB to complete your commands.
+All SQL commands, connections, tables names and columns are present in completion, just use TAB to complete your commands.
 
 ## Installation
 
