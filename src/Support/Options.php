@@ -2,7 +2,7 @@
 
 namespace PragmaRX\Sqli\Support;
 
-class Option {
+class Options {
 
 	/**
 	 * The options for this instance.

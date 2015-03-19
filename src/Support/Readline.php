@@ -2,9 +2,6 @@
 
 namespace PragmaRX\Sqli\Support;
 
-use Psy\Readline\Libedit;
-use Psy\Readline\GNUReadline;
-	
 class Readline {
 
 	/**
@@ -12,7 +9,7 @@ class Readline {
 	 *
 	 * @var
 	 */
-	private $readlineSupport;
+	private $hasReadlineSupport;
 
 	/**
 	 * The input.
@@ -42,10 +39,8 @@ class Readline {
 	 * Create a Readline instance.
 	 *
 	 */
-	public function __construct(Option $option, Commands $commands)
+	public function __construct(Options $option, Commands $commands)
 	{
-	    $this->readline = $this->getReadLine();
-
 		$this->option = $option;
 
 		$this->commands = $commands;
@@ -60,42 +55,16 @@ class Readline {
 	 */
 	public function __destruct()
 	{
-		fclose($this->input);
+		if ($this->input)
+		{
+			fclose($this->input);
+		}
 
-		if ($this->readlineSupport)
+		if ($this->hasReadlineSupport)
 		{
 			readline_write_history($this->option->get('readline_hist'));
 		}
 	}
-
-    public function getReadline()
-    {
-        if ( ! isset($this->readline))
-        {
-            $className = $this->getReadlineClass();
-            $this->readline = new $className(
-                $this->getHistoryFile(),
-                $this->getHistorySize(),
-                $this->getEraseDuplicates()
-            );
-        }
-
-        return $this->readline;
-    }
-
-    private function getReadlineClass()
-    {
-        if (GNUReadline::isSupported())
-        {
-            return 'Psy\Readline\GNUReadline';
-        }
-        elseif (Libedit::isSupported())
-        {
-            return 'Psy\Readline\Libedit';
-        }
-
-        return 'Psy\Readline\Transient';
-    }
 
 	private function getHistoryFile()
 	{
@@ -109,16 +78,6 @@ class Readline {
 		return $file;
 	}
 
-	private function getHistorySize()
-	{
-		return 5000;
-	}
-
-	private function getEraseDuplicates()
-	{
-		return true;
-	}
-
 	/**
 	 * Configure everything.
 	 *
@@ -127,14 +86,14 @@ class Readline {
 	{
 		$this->input = fopen('php://stdin', 'r');
 
-		$this->readlineSupport = true;
+		$this->hasReadlineSupport = true;
 
 		if (!function_exists('readline') || env('TERM') == 'dumb')
 		{
-			$this->readlineSupport = false;
+			$this->hasReadlineSupport = false;
 		}
 
-		if ($this->readlineSupport && is_readable($this->option->get('readline_hist')))
+		if ($this->hasReadlineSupport && is_readable($this->option->get('readline_hist')))
 		{
 			readline_read_history($this->option->get('readline_hist'));
 		}
@@ -143,61 +102,29 @@ class Readline {
 	/**
 	 * Read input
 	 *
-	 * @throws \Exception
-	 * @internal param $
-	 *
-	 * @return string Input
+	 * @param string $prompt
+	 * @return string
 	 */
-	public function read()
+	public function read($prompt = null)
 	{
-		$code  = '';
-		$done  = true;
-		$lines = 0;
-
-		do
+		if ($this->hasReadlineSupport)
 		{
-			$prompt = $lines > 0 ? '> ' : $this->makePrompt();
-
-			if ($this->readlineSupport)
-			{
-				$line = readline($prompt);
-			}
-			else
-			{
-				echo $prompt;
-				$line = fgets($this->input);
-			}
-
-			// If the input was empty, return false; this breaks the loop.
-			if ($line === false)
-			{
-				echo "\n";
-
-				return $this->quit();
-			}
-
-			$line = trim($line);
-
-			// If the last char is not a semicolon and this is not an internal command accumulate more lines.
-			if (substr($line, -1) != ';')
-			{
-				$done = ($lines !== 0 || ! $this->commands->all($code));
-			}
-
-			$code .= $line;
-			$lines++;
+			return readline($prompt);
 		}
-		while ( ! $done);
 
-		// Add the whole block to the readline history.
-		if ($this->readlineSupport)
+		echo $prompt;
+
+		return fgets($this->input);
+	}
+
+	public function saveHistory($code)
+	{
+		if ($this->hasReadlineSupport)
 		{
 			readline_add_history($code);
 
 			readline_write_history($this->option->get('readline_hist'));
 		}
-
-		return $code;
 	}
 
 	/**

@@ -10,7 +10,7 @@ class Commands {
 	 *
 	 * @var array
 	 */
-	private $internalCommands = array(
+	private $commands = array(
 		'quit' => array('method' => 'quit', 'description' => 'Exit interface.'),
 		'exit' => array('method' => 'quit', 'description' => ''),
 		'die' => array('method' => 'quit', 'description' => ''),
@@ -35,13 +35,18 @@ class Commands {
 
 		if ($matches)
 		{
-			if (isset($this->internalCommands[strtolower($matches[0])]))
+			if (isset($this->commands[strtolower($matches[0])]))
 			{
-				$command = $this->internalCommands[strtolower($matches[0])];
+				$command = $this->commands[strtolower($matches[0])];
 			}
 		}
 
 		return $command;
+	}
+
+	public function getCommandNames()
+	{
+		return array_keys($this->commands);
 	}
 
 }

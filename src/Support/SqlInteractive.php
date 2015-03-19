@@ -2,6 +2,7 @@
 
 namespace PragmaRX\Sqli\Support;
 
+use Illuminate\Support\Arr;
 use PragmaRX\Sqli\Support\DatabaseConnection;
 use PragmaRX\Sqli\Vendor\Laravel\Artisan\Sqli as Command;
 
@@ -65,17 +66,25 @@ class Sqlinteractive
 	private $commands;
 
 	/**
+	 * @var Completer
+	 */
+	private $completer;
+
+	/**
 	 * Constructor
 	 *
 	 * @param \PragmaRX\Sqli\Support\DatabaseConnection $databaseConnection
 	 * @param \PragmaRX\Sqli\Vendor\Laravel\Artisan\Sqli $command
-	 * @return \PragmaRX\Sqli\Support\Sqlinteractive
+	 * @param Readline $readline
+	 * @param Options $option
+	 * @param Commands $commands
 	 */
 	public function __construct(DatabaseConnection $databaseConnection,
 	                            Command $command,
 	                            Readline $readline,
-								Option $option,
-								Commands $commands)
+								Options $option,
+								Commands $commands,
+								Completer $completer)
 	{
 		$this->databaseConnection = $databaseConnection;
 
@@ -86,6 +95,8 @@ class Sqlinteractive
 		$this->option = $option;
 
 		$this->commands = $commands;
+
+		$this->completer = $completer;
 
 		$this->configure();
 	}
@@ -103,7 +114,7 @@ class Sqlinteractive
 		{
 			try
 			{
-				if (((boolean) $__code__ = $this->readline->read()) === false)
+				if (((boolean) $__code__ = $this->read()) === false)
 				{
 					continue;
 				}
@@ -377,6 +388,9 @@ class Sqlinteractive
 			$this->setConnection($parts[1]);
 		}
 
+		// Send new table names and columns to completer
+		$this->configureCompleter();
+
 		return true;
 	}
 
@@ -403,6 +417,8 @@ class Sqlinteractive
 		$this->option->setConnectionName($this->databaseConnection->getConnectionName());
 
 		$this->option->setDatabaseName($this->databaseConnection->getDatabaseName());
+
+		$this->configureCompleter();
 	}
 
 	private function setConnection($connection)
@@ -410,6 +426,77 @@ class Sqlinteractive
 		$this->databaseConnection->setConnection($connection);
 
 		$this->option->setConnectionName($connection);
+	}
+
+	/**
+	 * Read input
+	 *
+	 * @throws \Exception
+	 * @internal param $
+	 *
+	 * @return string Input
+	 */
+	public function read()
+	{
+		$code  = '';
+		$done  = true;
+		$lines = 0;
+
+		do
+		{
+			$prompt = $lines > 0 ? '> ' : $this->makePrompt();
+
+			$line = $this->readline->read($prompt);
+
+			// If the input was empty, return false; this breaks the loop.
+			if ($line === false)
+			{
+				echo "\n";
+
+				return $this->quit();
+			}
+
+			$line = trim($line);
+
+			// If the last char is not a semicolon and this is not an internal command accumulate more lines.
+			if (substr($line, -1) != ';')
+			{
+				$done = ($lines !== 0 || ! $this->commands->all($code));
+			}
+
+			$code .= $line;
+			$lines++;
+		}
+		while ( ! $done);
+
+		$this->readline->saveHistory($code);
+
+		return $code;
+	}
+
+	/**
+	 * @return string
+	 */
+	private function makePrompt()
+	{
+		return ($this->option->get('showtime') ? date('G:i:s ') : '') .
+			$this->option->get('connectionName').
+			':'.
+			$this->option->get('databaseName').'> ';
+	}
+
+	private function configureCompleter()
+	{
+		$this->completer->addCommands($this->commands->getCommandNames());
+
+		$this->completer->addCommands(array_keys($this->databaseConnection->getConnections()));
+
+		$this->completer->addCommands($this->databaseConnection->getTablesNames());
+
+		foreach ($this->databaseConnection->getTablesNames() as $table)
+		{
+			$this->completer->addCommands($this->databaseConnection->getColumnsNames($table));
+		}
 	}
 
 }

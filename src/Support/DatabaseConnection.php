@@ -2,9 +2,10 @@
 
 namespace PragmaRX\Sqli\Support;
 
+use Exception;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Config\Repository as Config;
-use Exception;
+use Illuminate\Database\Schema\Builder as IlluminateSchemaBuilder;
 
 class DatabaseConnection {
 
@@ -135,6 +136,28 @@ class DatabaseConnection {
 		uasort($tables, array($this, 'sortTableListCompare'));
 
 		return $tables;
+	}
+
+	public function getTablesNames()
+	{
+		$names = array();
+
+		foreach ($this->getAllTables() as $table)
+		{
+			$names[] = $table->table_name;
+		}
+
+		return $names;
+	}
+
+	public function getSchema()
+	{
+		return $this->connection()->getSchemaBuilder();
+	}
+
+	public function getColumnsNames($table)
+	{
+		return $this->getSchema()->getColumnListing($table);
 	}
 
 	/**
