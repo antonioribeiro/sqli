@@ -2,9 +2,9 @@
 
 namespace PragmaRX\Sqli\Support;
 
-use Psy\Readline\GNUReadline;
 use Psy\Readline\Libedit;
-
+use Psy\Readline\GNUReadline;
+	
 class Readline {
 
 	/**
@@ -70,7 +70,7 @@ class Readline {
 
     public function getReadline()
     {
-        if (!isset($this->readline))
+        if ( ! isset($this->readline))
         {
             $className = $this->getReadlineClass();
             $this->readline = new $className(
