@@ -8,13 +8,6 @@ use PragmaRX\Sqli\Vendor\Laravel\Artisan\Sqli as Command;
 class Sqlinteractive
 {
 	/**
-	 * The options for this instance.
-	 *
-	 * @var array
-	 */
-	protected $options = array();
-
-	/**
 	 * The database connection object.
 	 *
 	 * @var DatabaseConnection
@@ -50,22 +43,6 @@ class Sqlinteractive
 	private $timer;
 
 	/**
-	 * Array of internal commands.
-	 *
-	 * @var array
-	 */
-	private $internalCommands = array(
-		'quit' => array('method' => 'quit', 'description' => 'Exit interface.'),
-		'exit' => array('method' => 'quit', 'description' => ''),
-		'die' => array('method' => 'quit', 'description' => ''),
-		'tables' => array('method' => 'tables', 'description' => 'List all tables. Use "tables count" to list with row count.'),
-		'help' => array('method' => 'help', 'description' => 'Show this help.'),
-		'database' => array('method' => 'changeDatabase', 'description' => 'Change the current database connection. Usage: "database [connection name]".'),
-		'databases' => array('method' => 'connections', 'description' => 'Show a list of database connections.'),
-		'connections' => array('method' => 'connections', 'description' => 'Show a list of database connections.'),
-	);
-
-	/**
 	 * Quit the application?
 	 *
 	 * @var bool
@@ -73,18 +50,19 @@ class Sqlinteractive
 	private $quit = false;
 
 	/**
-	 * The input.
-	 *
-	 * @var
+	 * @var Readline
 	 */
-	private $input;
+	private $readline;
 
 	/**
-	 * Does it have readline support enabled?
-	 *
-	 * @var
+	 * @var Option
 	 */
-	private $readlineSupport;
+	private $option;
+
+	/**
+	 * @var Commands
+	 */
+	private $commands;
 
 	/**
 	 * Constructor
@@ -93,83 +71,23 @@ class Sqlinteractive
 	 * @param \PragmaRX\Sqli\Vendor\Laravel\Artisan\Sqli $command
 	 * @return \PragmaRX\Sqli\Support\Sqlinteractive
 	 */
-	public function __construct(DatabaseConnection $databaseConnection, Command $command)
+	public function __construct(DatabaseConnection $databaseConnection,
+	                            Command $command,
+	                            Readline $readline,
+								Option $option,
+								Commands $commands)
 	{
 		$this->databaseConnection = $databaseConnection;
 
 		$this->command = $command;
 
+		$this->readline = $readline;
+
+		$this->option = $option;
+
+		$this->commands = $commands;
+
 		$this->configure();
-	}
-
-	/**
-	 * Configure everything.
-	 *
-	 */
-	private function configure()
-	{
-		$this->input = fopen('php://stdin', 'r');
-
-		$this->options = $this->getDefaultOptions();
-
-		$this->readlineSupport = true;
-
-		if (!function_exists('readline') || env('TERM') == 'dumb')
-		{
-			$this->readlineSupport = false;
-		}
-
-		if ($this->readlineSupport && is_readable($this->getOption('readline_hist')))
-		{
-			readline_read_history($this->getOption('readline_hist'));
-		}
-	}
-
-	/**
-	 * Get default options
-	 *
-	 * @return array Defaults
-	 */
-	private function getDefaultOptions()
-	{
-		$defaults = array(
-			'prompt'        => $this->prompt.'> ',
-			'showtime'      => false,
-			'readline_hist' => $this->getHistoryFile(),
-		);
-
-		return $defaults;
-	}
-
-	/**
-	 * Option getter.
-	 *
-	 * @param $type
-	 * @return null
-	 */
-	private function getOption($type)
-	{
-		if (!isset($this->options[$type]))
-		{
-			return null;
-		}
-
-		return $this->options[$type];
-	}
-
-	/**
-	 * The destructor.
-	 *
-	 * @return void
-	 */
-	public function __destruct()
-	{
-		fclose($this->input);
-
-		if ($this->readlineSupport)
-		{
-			readline_write_history($this->getOption('readline_hist'));
-		}
 	}
 
 	/**
@@ -185,7 +103,7 @@ class Sqlinteractive
 		{
 			try
 			{
-				if (((boolean) $__code__ = $this->read()) === false)
+				if (((boolean) $__code__ = $this->readline->read()) === false)
 				{
 					continue;
 				}
@@ -203,66 +121,6 @@ class Sqlinteractive
 				echo ($_ = $e) . "\n";
 			}
 		}
-	}
-
-	/**
-	 * Read input
-	 *
-	 * @throws \Exception
-	 * @internal param $
-	 *
-	 * @return string Input
-	 */
-	private function read()
-	{
-		$code  = '';
-		$done  = true;
-		$lines = 0;
-
-		do
-		{
-			$prompt = $lines > 0 ? '> ' : $this->makePrompt();
-
-			if ($this->readlineSupport)
-			{
-				$line = readline($prompt);
-			}
-			else
-			{
-				echo $prompt;
-				$line = fgets($this->input);
-			}
-
-			// If the input was empty, return false; this breaks the loop.
-			if ($line === false)
-			{
-				echo "\n";
-
-				return $this->quit();
-			}
-
-			$line = trim($line);
-
-			// If the last char is not a semicolon and this is not an internal command accumulate more lines.
-			if (substr($line, -1) != ';')
-			{
-				$done = ($lines !== 0 || ! $this->getInternalCommand($code));
-			}
-
-			$code .= $line;
-			$lines++;
-		}
-		while ( ! $done);
-
-		// Add the whole block to the readline history.
-		if ($this->readlineSupport)
-		{
-			readline_add_history($code);
-
-			readline_write_history($this->getOption('readline_hist'));
-		}
-
-		return $code;
 	}
 
 	/**
@@ -449,34 +307,11 @@ class Sqlinteractive
 	 */
 	private function executeInternalCommand($command)
 	{
-		$internalCommand = $this->getInternalCommand($command);
+		$internalCommand = $this->commands->all($command);
 
 		return  isset($internalCommand)
 				? $this->{$internalCommand['method']}($command)
 				: null;
-	}
-
-	/**
-	 * Get the internal command method to be executed.
-	 *
-	 * @param $string
-	 * @return null|string
-	 */
-	private function getInternalCommand($string)
-	{
-		preg_match('/\w+/', $string, $matches);
-
-		$command = null;
-
-		if ($matches)
-		{
-			if (isset($this->internalCommands[strtolower($matches[0])]))
-			{
-				$command = $this->internalCommands[strtolower($matches[0])];
-			}
-		}
-
-		return $command;
 	}
 
 	/**
@@ -521,17 +356,6 @@ class Sqlinteractive
 	}
 
 	/**
-	 * @return string
-	 */
-	private function makePrompt()
-	{
-		return ($this->getOption('showtime') ? date('G:i:s ') : '') .
-				$this->databaseConnection->getConnectionName().
-				':'.
-				$this->databaseConnection->getDatabaseName().'> ';
-	}
-
-	/**
 	 * Change the current database connection.
 	 *
 	 */
@@ -550,7 +374,7 @@ class Sqlinteractive
 		}
 		else
 		{
-			$this->databaseConnection->setConnection($parts[1]);
+			$this->setConnection($parts[1]);
 		}
 
 		return true;
@@ -568,6 +392,24 @@ class Sqlinteractive
 		$this->output($result);
 
 		return true;
+	}
+
+	private function configure()
+	{
+		$this->option->setPrompt($this->prompt);
+
+		$this->option->setReadlineHistory($this->getHistoryFile());
+
+		$this->option->setConnectionName($this->databaseConnection->getConnectionName());
+
+		$this->option->setDatabaseName($this->databaseConnection->getDatabaseName());
+	}
+
+	private function setConnection($connection)
+	{
+		$this->databaseConnection->setConnection($connection);
+
+		$this->option->setConnectionName($connection);
 	}
 
 }

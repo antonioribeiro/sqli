@@ -3,6 +3,9 @@
 namespace PragmaRX\Sqli\Vendor\Laravel;
 
 use PragmaRX\Sqli\Sqli;
+use PragmaRX\Sqli\Support\Commands;
+use PragmaRX\Sqli\Support\Option;
+use PragmaRX\Sqli\Support\Readline;
 use PragmaRX\Sqli\Support\Statement;
 use PragmaRX\Sqli\Support\Sqlinteractive;
 use PragmaRX\Sqli\Support\WorkingDirectory;
@@ -90,10 +93,14 @@ class ServiceProvider extends PragmaRXServiceProvider {
 
 			$database = new DatabaseConnection($app['db'], $app['config']);
 
+			$option = new Option();
+
+			$commands = new Commands();
+
 			return new Sqli(
 				$database,
 				new Statement(new WorkingDirectory),
-				new Sqlinteractive($database, $app['select.sqli.command'])
+				new Sqlinteractive($database, $app['select.sqli.command'], new Readline($option, $commands), $option, $commands)
 			);
 		});
 	}
