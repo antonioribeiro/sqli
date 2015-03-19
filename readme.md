@@ -167,6 +167,10 @@ But you can also escape them with \
 
     a update users set created_at = \'NOW\'
 
+## Command Line Completion
+
+All SQL commands tables names and columns are present in completion, just use TAB to complete your commands.
+
 ## Installation
 
 ### Requirements
