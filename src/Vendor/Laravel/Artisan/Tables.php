@@ -19,7 +19,7 @@ class Tables extends Base {
 	protected $description = 'List all tables in database';
 
 	protected $options = array(
-			array('count', null, InputOption::VALUE_NONE, 'Display number of rows for each table.', null),
+		array('count', null, InputOption::VALUE_NONE, 'Display number of rows for each table.', null),
 	);
 
 	/**
@@ -27,9 +27,9 @@ class Tables extends Base {
 	 *
 	 * @return void
 	 */
-	public function fire()
+	public function handle()
 	{
-		parent::fire();
+		parent::handle();
 
 		$this->display($this->laravel->select->getTables($this->input->getOption('count')));
 	}

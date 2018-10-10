@@ -95,11 +95,7 @@ class Base extends Command {
 			$rows[] = (array) $row;
 		}
 
-		$this->table = $this->getHelperSet()->get('table');
-
-		$this->table->setHeaders($headers)->setRows($rows);
-
-		$this->table->render($this->getOutput());
+		$this->table($headers, $rows);
 	}
 
 	/**
@@ -117,7 +113,7 @@ class Base extends Command {
 	 * Base procedures to prepare the command to be run.
 	 *
 	 */
-	public function fire()
+	public function handle()
 	{
 		$this->laravel->select->setConnection($this->input->getOption('database'));
 	}
