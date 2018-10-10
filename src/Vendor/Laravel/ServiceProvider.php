@@ -88,7 +88,7 @@ class ServiceProvider extends PragmaRXServiceProvider {
 	 */
 	private function registerSelect()
 	{
-		$this->app['select'] = $this->app->share(function($app)
+		$this->app->singleton('select', function($app)
 		{
 			$app['select.loaded'] = true;
 
@@ -120,7 +120,7 @@ class ServiceProvider extends PragmaRXServiceProvider {
 	 */ 
 	private function registerSelectCommand()
 	{
-		$this->app['select.select.command'] = $this->app->share(function($app)
+		$this->app->singleton('select.select.command', function($app)
 		{
 			return new SelectCommand();
 		});
@@ -135,7 +135,7 @@ class ServiceProvider extends PragmaRXServiceProvider {
 	 */ 
 	private function registerDeleteCommand()
 	{
-		$this->app['select.delete.command'] = $this->app->share(function($app)
+		$this->app->singleton('select.delete.command', function($app)
 		{
 			return new DeleteCommand();
 		});
@@ -150,7 +150,7 @@ class ServiceProvider extends PragmaRXServiceProvider {
 	 */ 
 	private function registerInsertCommand()
 	{
-		$this->app['select.insert.command'] = $this->app->share(function($app)
+		$this->app->singleton('select.insert.command', function($app)
 		{
 			return new InsertCommand();
 		});
@@ -165,7 +165,7 @@ class ServiceProvider extends PragmaRXServiceProvider {
 	 */
 	private function registerUpdateCommand()
 	{
-		$this->app['select.update.command'] = $this->app->share(function($app)
+		$this->app->singleton('select.update.command', function($app)
 		{
 			return new UpdateCommand();
 		});
@@ -180,7 +180,7 @@ class ServiceProvider extends PragmaRXServiceProvider {
 	 */ 
 	private function registerSqlCommand()
 	{
-		$this->app['select.sql.command'] = $this->app->share(function($app)
+		$this->app->singleton('select.sql.command', function($app)
 		{
 			return new SqlCommand();
 		});
@@ -195,7 +195,7 @@ class ServiceProvider extends PragmaRXServiceProvider {
 	 */
 	private function registerSqliCommand()
 	{
-		$this->app['select.sqli.command'] = $this->app->share(function($app)
+		$this->app->singleton('select.sqli.command', function($app)
 		{
 			return new SqliCommand();
 		});
@@ -210,7 +210,7 @@ class ServiceProvider extends PragmaRXServiceProvider {
 	 */ 
 	private function registerTablesCommand()
 	{
-		$this->app['select.tables.command'] = $this->app->share(function($app)
+		$this->app->singleton('select.tables.command', function($app)
 		{
 			return new TablesCommand();
 		});

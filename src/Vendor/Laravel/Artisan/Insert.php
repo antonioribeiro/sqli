@@ -21,9 +21,9 @@ class Insert extends Base {
 	 *
 	 * @return void
 	 */
-	public function fire()
+	public function handle()
 	{
-		parent::fire();
+		parent::handle();
 
 		$this->display($this->laravel->select->execute($this->name, $this->input->getArgument('query'), $this->input->getOption('database')));
 	}
